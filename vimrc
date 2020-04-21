@@ -157,7 +157,7 @@ let g:go_highlight_build_constraints = 1
 " Global Keymappings
 "-----------------------------------------------------------------------------
 " Commenting with commentary
-nmap <silent> <C-c> gc
+nmap <silent> <C-c> gcc
 vmap <silent> <C-c> gc
 
 " Mapping typical keys
