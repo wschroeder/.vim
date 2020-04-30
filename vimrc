@@ -18,8 +18,11 @@ endif
 call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'elixir-editors/vim-elixir'
-Plug 'kien/ctrlp.vim'
+Plug 'guns/vim-sexp'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'vim-airline/vim-airline'
@@ -53,13 +56,9 @@ endfunction
 let g:todo_root = '~'
 let g:todo_open_command = 'elinks'
 
-" ctrlp
-let g:ctrlp_open_multiple_files = 't'
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
-    \ 'AcceptSelection("t")': ['<cr>'],
-    \ }
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard && git submodule foreach --recursive --quiet "git ls-files -oc --exclude-standard | sed \"s/^/\$path\//\""']
+" Clap
+nmap <C-p> :Clap files<CR>
+let g:clap_open_action = { 'enter': 'tab split', 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit' }
 
 
 "-----------------------------------------------------------------------------
