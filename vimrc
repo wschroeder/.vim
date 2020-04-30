@@ -240,11 +240,11 @@ function! CustomNewTab()
     endif
 endfunction
 
-nmap <silent> <M-k> :call CustomPreviousTab()<cr>
-nmap <silent> <M-j> :call CustomNextTab()<cr>
-nmap <silent> <M-c> :if len(getwininfo()) == 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
-nmap <silent> <M-n> :call CustomNewTab()<cr>
-nmap <silent> <M-t> :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
+nmap <silent> <Esc>k :call CustomPreviousTab()<cr>
+nmap <silent> <Esc>j :call CustomNextTab()<cr>
+nmap <silent> <Esc>c :if len(getwininfo()) == 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
+nmap <silent> <Esc>n :call CustomNewTab()<cr>
+nmap <silent> <Esc>t :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
 nmap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
 
