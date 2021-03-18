@@ -30,7 +30,7 @@ hi ErrorMsg guifg=#FF0000 guibg=NONE guisp=NONE gui=NONE ctermfg=196 ctermbg=NON
 "hi Ignore -- no settings --
 "hi Debug -- no settings --
 hi PMenuSbar guifg=NONE guibg=#777777 guisp=#777777 gui=NONE ctermfg=NONE ctermbg=243 cterm=NONE
-hi Identifier guifg=#6496C8 guibg=NONE guisp=NONE gui=NONE ctermfg=68 ctermbg=NONE cterm=NONE
+hi Identifier guifg=#6496C8 guibg=NONE guisp=NONE gui=NONE ctermfg=6 ctermbg=NONE cterm=NONE
 "hi SpecialChar -- no settings --
 hi Conditional guifg=#C89664 guibg=NONE guisp=NONE gui=NONE ctermfg=173 ctermbg=NONE cterm=NONE
 hi StorageClass guifg=#DC4B32 guibg=NONE guisp=NONE gui=NONE ctermfg=167 ctermbg=NONE cterm=NONE
