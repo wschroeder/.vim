@@ -19,6 +19,7 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
+Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fireplace'
