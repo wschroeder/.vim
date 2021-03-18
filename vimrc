@@ -85,6 +85,7 @@ set directory=$HOME/.vim-local/swp  " Swap files will all be at the home directo
 set expandtab                    " Tab keys is spaces instead of tab (C-V Tab will tab)
 set formatoptions=clnqr2         " Automatic format options (about all of them except auto-format)
 set hidden                       " Can hide buffers when abandoning them (don't need to save to switch)
+set incsearch                    " Incremental search (go there while I am typing)
 set laststatus=2                 " Always show a status line
 set list                         " Shows special characters, like tabs, end of lines, spaces, and so forth
 set listchars=tab:__,trail:.     " Tabs look like ____, and trailing spaces look like .
