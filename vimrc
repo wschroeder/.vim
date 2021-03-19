@@ -17,9 +17,11 @@ endif
 "-----------------------------------------------------------------------------
 call plug#begin()
 Plug 'airblade/vim-gitgutter'
+Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fireplace'
@@ -162,6 +164,12 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
+" ----------------------------------------------------------------------
+" notational-fzf-vim
+" ----------------------------------------------------------------------
+let g:nv_search_paths = ["~/.deft"]
+let g:nv_default_extension = '.md'
+nmap <silent> <F12> :NV<cr>
 
 "-----------------------------------------------------------------------------
 " Global Keymappings
