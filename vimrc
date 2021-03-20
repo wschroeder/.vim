@@ -23,6 +23,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-fugitive'
@@ -179,6 +180,15 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 3
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
+
+" ----------------------------------------------------------------------
+" ack for rg
+" ----------------------------------------------------------------------
+let g:ackprg = 'rg --vimgrep --type-not sql --smart-case'
+let g:ack_use_cword_for_empty_search = 1
+cnoreabbrev rg Ack
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
 
 "-----------------------------------------------------------------------------
 " Global Keymappings
