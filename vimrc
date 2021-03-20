@@ -20,6 +20,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
+Plug 'godlygeek/tabular'
+Plug 'gabrielelana/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
@@ -189,6 +191,11 @@ let g:ack_use_cword_for_empty_search = 1
 cnoreabbrev rg Ack
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
+
+" ----------------------------------------------------------------------
+" vim-markdown
+" ----------------------------------------------------------------------
+let g:markdown_enable_spell_checking = 0
 
 "-----------------------------------------------------------------------------
 " Global Keymappings
