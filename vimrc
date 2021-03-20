@@ -221,7 +221,7 @@ map <C-Home> 1G
 map <C-End> G$
 
 " Fast ESC alternative in Insert mode
-imap jj <Esc>
+imap jk <Esc>
 
 " Searching what is highlighted
 vmap \/ y/<C-R>"
