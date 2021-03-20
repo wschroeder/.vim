@@ -32,6 +32,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
+Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/LargeFile'
 Plug 'vlime/vlime'
@@ -196,6 +197,13 @@ nnoremap <silent> ]q :cnext<CR>
 " vim-markdown
 " ----------------------------------------------------------------------
 let g:markdown_enable_spell_checking = 0
+
+" ----------------------------------------------------------------------
+" open-browser
+" ----------------------------------------------------------------------
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 
 "-----------------------------------------------------------------------------
 " Global Keymappings
