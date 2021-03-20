@@ -239,6 +239,36 @@ cnoremap ∫    <S-Left>
 cnoremap ƒ    <S-Right>
 cnoremap <A-Backspace>    <C-W>
 
+" Playing with vimrc
+nnoremap <leader>ev :tabnew $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Journaling with notational/deft
+function OpenJournal()
+    let l:today = strftime("%Y-%m-%d")
+    let l:today_journal = expand("~/.deft/todo:" . l:today . ".md")
+    let l:yesterday = strftime("%Y-%m-%d", localtime() - 86400)
+    let l:yesterday_journal = expand("~/.deft/todo:" . l:yesterday . ".md")
+
+    if filereadable(l:today_journal)
+        execute "tabnew" l:today_journal
+    else
+        if filereadable(l:yesterday_journal)
+            let l:yesterday_content = readfile(l:yesterday_journal, "b")
+            call writefile(l:yesterday_content, l:today_journal, "b")
+            execute "tabnew" l:today_journal
+            call deletebufline(bufname("%"), 1, 1)
+        else
+            execute "tabnew" l:today_journal
+        endif
+
+        call appendbufline(bufname("%"), 0, "TODO:" . l:today)
+        execute "write"
+    endif
+endfunction
+command! -nargs=0 OpenJournal call OpenJournal()
+nnoremap <silent> <leader>l :OpenJournal<cr>
+
 " Easier formatting
 function FormatOrIndent()
     normal ml
@@ -275,21 +305,21 @@ inoremap <silent> <C-\><C-\> <C-O>:call DeleteHorizontalSpace()<CR>
 nnoremap <silent> <C-\><C-\> :call DeleteHorizontalSpace()<CR>
 
 " Tab navigation
-function! CustomPreviousTab()
+function CustomPreviousTab()
     if tabpagenr('$') == 1
         bp
     else
         tabprevious
     endif
 endfunction
-function! CustomNextTab()
+function CustomNextTab()
     if tabpagenr('$') == 1
         bn
     else
         tabnext
     endif
 endfunction
-function! CustomNewTab()
+function CustomNewTab()
     if tabpagenr('$') == 1
         new
     else
