@@ -197,6 +197,7 @@ nnoremap <silent> ]q :cnext<CR>
 " vim-markdown
 " ----------------------------------------------------------------------
 let g:markdown_enable_spell_checking = 0
+let g:markdown_enable_folding = 1
 
 " ----------------------------------------------------------------------
 " open-browser
@@ -265,6 +266,8 @@ function OpenJournal()
         call appendbufline(bufname("%"), 0, "TODO:" . l:today)
         execute "write"
     endif
+
+    normal zM
 endfunction
 command! -nargs=0 OpenJournal call OpenJournal()
 nnoremap <silent> <leader>l :OpenJournal<cr>
