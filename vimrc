@@ -6,7 +6,7 @@ set encoding=utf-8
 "-----------------------------------------------------------------------------
 let s:vimlocaldir          = $HOME . "/.vim-local"
 let s:vimlocaldir_swp      = s:vimlocaldir . "/swp"
-if finddir(s:vimlocaldir) == ""
+if finddir(s:vimlocaldir) ==# ""
     call mkdir(s:vimlocaldir,          "", 0700)
     call mkdir(s:vimlocaldir_swp,      "", 0700)
 endif
@@ -276,14 +276,14 @@ nnoremap <silent> <leader>l :OpenJournal<cr>
 function FormatOrIndent()
     normal ml
     let l:attrName = synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")
-    if l:attrName == "Comment"
+    if l:attrName ==# "Comment"
         call SyntaxVisualSelect('b')
         normal gq
-    elseif l:attrName == "" || &ft == "" || &ft == "gitcommit"
+    elseif l:attrName ==# "" || &ft ==# "" || &ft ==# "gitcommit"
         normal gqip
-    elseif &ft == "lisp"
+    elseif &ft ==# "lisp"
         normal =ap
-    elseif &ft == "perl" && executable("perltidy")
+    elseif &ft ==# "perl" && executable("perltidy")
         normal VaB:!perltidy -q
     else
         normal ml=aB
@@ -309,21 +309,21 @@ nnoremap <silent> <C-\><C-\> :call DeleteHorizontalSpace()<CR>
 
 " Tab navigation
 function CustomPreviousTab()
-    if tabpagenr('$') == 1
+    if tabpagenr('$') ==# 1
         bp
     else
         tabprevious
     endif
 endfunction
 function CustomNextTab()
-    if tabpagenr('$') == 1
+    if tabpagenr('$') ==# 1
         bn
     else
         tabnext
     endif
 endfunction
 function CustomNewTab()
-    if tabpagenr('$') == 1
+    if tabpagenr('$') ==# 1
         new
     else
         tabnew
@@ -332,7 +332,7 @@ endfunction
 
 nmap <silent> <Esc>k :call CustomPreviousTab()<cr>
 nmap <silent> <Esc>j :call CustomNextTab()<cr>
-nmap <silent> <Esc>c :if len(getwininfo()) == 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
+nmap <silent> <Esc>c :if len(getwininfo()) ==# 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
 nmap <silent> <Esc>n :call CustomNewTab()<cr>
 nmap <silent> <Esc>t :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
 nmap Q :echo "I just saved you from Q"<cr>
