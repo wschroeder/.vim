@@ -1,5 +1,9 @@
+"-----------------------------------------------------------------------------
+" Front matter
+"-----------------------------------------------------------------------------
 set nocompatible                " Turn on vim defaults (instead of vi compatibility)
 set encoding=utf-8
+
 
 "-----------------------------------------------------------------------------
 " Set up .vim-local
@@ -202,6 +206,38 @@ nnoremap <silent> ]q :cnext<CR>
 " ----------------------------------------------------------------------
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_folding = 1
+
+function s:HashIndent(lnum) abort
+    let hash_header = matchstr(getline(a:lnum), '^#\{1,6}')
+    if len(hash_header)
+        return hash_header
+    else
+        let nextline = getline(a:lnum + 1)
+        if nextline =~# '^=\+\s*$'
+            return '#'
+        elseif nextline =~# '^-\+\s*$'
+            return '##'
+        endif
+    endif
+endfunction
+
+function MarkdownFoldText() abort
+    let hash_indent = s:HashIndent(v:foldstart)
+    let title = substitute(getline(v:foldstart), '^#\+\s*', '', '')
+    let foldsize = (v:foldend - v:foldstart + 1)
+    let linecount = '['.foldsize.' lines]'
+    return hash_indent.' '.title.' '.linecount
+endfunction
+
+function ConfigureMarkdown()
+    setlocal foldtext=MarkdownFoldText()
+endfunction
+
+augroup autoread_autos
+    autocmd!
+    autocmd FileType markdown call ConfigureMarkdown()
+augroup END
+
 
 " ----------------------------------------------------------------------
 " open-browser
