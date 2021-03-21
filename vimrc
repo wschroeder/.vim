@@ -171,6 +171,8 @@ function ConfigureVimrc()
     setlocal foldmethod=expr
     setlocal foldexpr=getline(v:lnum)=~'^\"----------'&&getline(v:lnum+1)=~'^\"\ .'&&getline(v:lnum+2)=~'^\"----------'?'>1':1
     setlocal foldtext=VimrcFoldText()
+
+    nnoremap <buffer> <Tab> za
 endfunction
 
 augroup filetype_vim
@@ -201,6 +203,7 @@ let g:go_highlight_build_constraints = 1
 let g:nv_search_paths = ["~/.deft"]
 let g:nv_default_extension = '.md'
 nnoremap <silent> <F12> :NV<cr>
+
 
 "-----------------------------------------------------------------------------
 " netrw - this comes with vim for directory exploration
@@ -250,9 +253,10 @@ endfunction
 
 function ConfigureMarkdown()
     setlocal foldtext=MarkdownFoldText()
+    nnoremap <buffer> <Tab> za
 endfunction
 
-augroup autoread_autos
+augroup markdown_autos
     autocmd!
     autocmd FileType markdown call ConfigureMarkdown()
 augroup END
