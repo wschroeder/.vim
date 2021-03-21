@@ -331,28 +331,28 @@ function OpenJournal()
         execute "write"
     endif
 
-    normal zM
+    normal! zM
 endfunction
 command! -nargs=0 OpenJournal call OpenJournal()
 nnoremap <silent> <leader>l :OpenJournal<cr>
 
 " Easier formatting
 function FormatOrIndent()
-    normal ml
+    normal! ml
     let l:attrName = synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")
     if l:attrName ==# "Comment"
         call SyntaxVisualSelect('b')
-        normal gq
+        normal! gq
     elseif l:attrName ==# "" || &ft ==# "" || &ft ==# "gitcommit"
-        normal gqip
+        normal! gqip
     elseif &ft ==# "lisp"
-        normal =ap
+        normal! =ap
     elseif &ft ==# "perl" && executable("perltidy")
-        normal VaB:!perltidy -q
+        execute "normal! VaB:!perltidy -q\<cr>"
     else
-        normal ml=aB
+        normal! ml=aB
     endif
-    normal `l
+    normal! `l
 endfunction
 inoremap <silent> <Esc>q <Esc>:call FormatOrIndent()<CR>a
 nnoremap <silent> <Esc>q :call FormatOrIndent()<CR>
@@ -365,7 +365,7 @@ vnoremap <silent> œ :call FormatOrIndent()<CR>
 function DeleteHorizontalSpace()
     call searchpos(' *', 'bc')
     if getline(".")[col(".") - 1] =~ "\\s"
-        normal dw
+        normal! dw
     endif
 endfunction
 inoremap <silent> <C-\><C-\> <C-O>:call DeleteHorizontalSpace()<CR>
@@ -438,7 +438,7 @@ endfunction
 function! RestoreCursor()
     try
         if bufname(".") !~ "COMMIT_EDITMSG"
-            normal `"zz
+            normal! `"zz
         endif
     catch
         return 1
