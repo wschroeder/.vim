@@ -2,7 +2,8 @@
 " Front matter
 "-----------------------------------------------------------------------------
 set nocompatible                " Turn on vim defaults (instead of vi compatibility)
-set encoding=utf-8
+set encoding=utf-8              " Use UTF-8 encoding for displaying properly
+let mapleader=' '               " Leader key is Space instead of \
 
 
 "-----------------------------------------------------------------------------
@@ -288,7 +289,7 @@ noremap <C-End> G$
 inoremap jk <Esc>
 
 " Searching what is highlighted
-vnoremap \/ y/<C-R>"
+vnoremap <leader>/ y/<C-R>"
 
 " Like emacs occur; occur on what you last searched for
 nnoremap g/ :set hlsearch<CR>:vimgrep /<C-R>//j %<CR>\|:cw<CR>
