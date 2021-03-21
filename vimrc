@@ -142,14 +142,18 @@ set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set completeopt=longest,menuone,preview
 
 " Autoread
-" Trigger `autoread` when files changes on disk
-" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-" Notification after file change
-" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
-autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+augroup autoread_autos
+    autocmd!
+
+    " Trigger `autoread` when files changes on disk
+    " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+    " https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+    " Notification after file change
+    " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+    autocmd FileChangedShellPost *
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+augroup END
 
 
 " ----------------------------------------------------------------------
@@ -380,10 +384,6 @@ function! RestoreCursor()
         return 1
     endtry
 endfunction
-autocmd BufNewFile,BufReadPost,BufNew * call RestoreCursor()
-
-" Turn off folding in every new buffer
-autocmd BufNewFile,BufReadPost,BufNew * normal zn
 
 " Configure mail buffers (especially for mutt usage)
 function! ConfigureMail()
@@ -393,34 +393,41 @@ function! ConfigureMail()
   set textwidth=70
   set spell spelllang=en_us
 endfunction
-autocmd BufNewFile,BufRead */mutt-* call ConfigureMail()
-
-autocmd BufNewFile,BufRead *.js set shiftwidth=2
-autocmd BufNewFile,BufRead *.hbs set shiftwidth=2
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
-
-
-" .asd files are also Lisp files
-autocmd BufNewFile,BufRead *.asd set ft=lisp
-
-" Vagrantfile and pp puppet files are ruby files
-autocmd BufNewFile,BufRead Vagrantfile set ft=ruby
-autocmd BufNewFile,BufRead *.pp set ft=ruby
-
-" .t files are also perl files
-autocmd BufNewFile,BufRead *.t set ft=perl
-
-" Programming language files tend to be small, so we'll do full syntax
-autocmd BufNewFile,BufRead,BufWinEnter *.asd,*.t,*.pl,*.pm,*.lisp,*.clj,*vimrc,*.vim,*.py,*.c,*.js,*.html,*.htm syntax sync fromstart
 
 " Go files require a specific standard
 function! ConfigureGo()
   set noexpandtab
   set nolist
 endfunction
-autocmd BufNewFile,BufRead,BufWinEnter *.go call ConfigureGo()
+
+augroup general_autos
+    autocmd!
+
+    autocmd BufNewFile,BufReadPost,BufNew * call RestoreCursor()
+
+    autocmd BufNewFile,BufRead */mutt-* call ConfigureMail()
+
+    autocmd BufNewFile,BufRead *.js set shiftwidth=2
+    autocmd BufNewFile,BufRead *.hbs set shiftwidth=2
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
+
+    " .asd files are also Lisp files
+    autocmd BufNewFile,BufRead *.asd set ft=lisp
+
+    " Vagrantfile and pp puppet files are ruby files
+    autocmd BufNewFile,BufRead Vagrantfile set ft=ruby
+    autocmd BufNewFile,BufRead *.pp set ft=ruby
+
+    " .t files are also perl files
+    autocmd BufNewFile,BufRead *.t set ft=perl
+
+    " Programming language files tend to be small, so we'll do full syntax
+    autocmd BufNewFile,BufRead,BufWinEnter *.asd,*.t,*.pl,*.pm,*.lisp,*.clj,*vimrc,*.vim,*.py,*.c,*.js,*.html,*.htm syntax sync fromstart
+
+    autocmd BufNewFile,BufRead,BufWinEnter *.go call ConfigureGo()
+augroup END
 
 "-----------------------------------------------------------------------------
 " Now that everything is in place, read local differences
