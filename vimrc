@@ -69,7 +69,7 @@ let g:todo_root = '~'
 let g:todo_open_command = 'elinks'
 
 " Clap
-nmap <C-p> :Clap files<CR>
+nnoremap <C-p> :Clap files<CR>
 let g:clap_open_action = { 'enter': 'tab split', 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit' }
 
 " Closetag
@@ -200,7 +200,7 @@ let g:go_highlight_build_constraints = 1
 "-----------------------------------------------------------------------------
 let g:nv_search_paths = ["~/.deft"]
 let g:nv_default_extension = '.md'
-nmap <silent> <F12> :NV<cr>
+nnoremap <silent> <F12> :NV<cr>
 
 "-----------------------------------------------------------------------------
 " netrw - this comes with vim for directory exploration
@@ -262,32 +262,32 @@ augroup END
 " open-browser
 "-----------------------------------------------------------------------------
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
+nnoremap gx <Plug>(openbrowser-smart-search)
+vnoremap gx <Plug>(openbrowser-smart-search)
 
 "-----------------------------------------------------------------------------
 " Global Keymappings
 "-----------------------------------------------------------------------------
 " Commenting with commentary
-nmap <silent> <C-c> gcc
-vmap <silent> <C-c> gc
+nnoremap <silent> <C-c> gcc
+vnoremap <silent> <C-c> gc
 
 " Mapping typical keys
-map <PageUp> 
-map <PageDown> 
-map <Home> 0
-map <End> $
-map <C-Home> 1G
-map <C-End> G$
+noremap <PageUp> 
+noremap <PageDown> 
+noremap <Home> 0
+noremap <End> $
+noremap <C-Home> 1G
+noremap <C-End> G$
 
 " Fast ESC alternative in Insert mode
-imap jk <Esc>
+inoremap jk <Esc>
 
 " Searching what is highlighted
-vmap \/ y/<C-R>"
+vnoremap \/ y/<C-R>"
 
 " Like emacs occur; occur on what you last searched for
-nmap g/ :set hlsearch<CR>:vimgrep /<C-R>//j %<CR>\|:cw<CR>
+nnoremap g/ :set hlsearch<CR>:vimgrep /<C-R>//j %<CR>\|:cw<CR>
 
 " Command line
 cnoremap <C-A>     <Home>
@@ -389,12 +389,12 @@ function CustomNewTab()
     endif
 endfunction
 
-nmap <silent> <Esc>k :call CustomPreviousTab()<cr>
-nmap <silent> <Esc>j :call CustomNextTab()<cr>
-nmap <silent> <Esc>c :if len(getwininfo()) ==# 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
-nmap <silent> <Esc>n :call CustomNewTab()<cr>
-nmap <silent> <Esc>t :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
-nmap Q :echo "I just saved you from Q"<cr>
+nnoremap <silent> <Esc>k :call CustomPreviousTab()<cr>
+nnoremap <silent> <Esc>j :call CustomNextTab()<cr>
+nnoremap <silent> <Esc>c :if len(getwininfo()) ==# 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
+nnoremap <silent> <Esc>n :call CustomNewTab()<cr>
+nnoremap <silent> <Esc>t :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
+nnoremap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
 
 
