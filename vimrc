@@ -180,6 +180,7 @@ function ConfigureVimrc()
     setlocal foldtext=VimrcFoldText()
 
     nnoremap <buffer> <Tab> za
+    nnoremap <buffer> <S-Tab> zM
 endfunction
 
 augroup filetype_vim
@@ -261,6 +262,7 @@ endfunction
 function ConfigureMarkdown()
     setlocal foldtext=MarkdownFoldText()
     nnoremap <buffer> <Tab> za
+    nnoremap <buffer> <S-Tab> zM
 endfunction
 
 augroup markdown_autos
