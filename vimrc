@@ -319,16 +319,23 @@ nnoremap <leader>ev :tabnew $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Journaling with notational/deft
+function s:GetLatestJournalEntry()
+    let l:all_entries = split(globpath(expand("~/.deft"), "todo:*.md"), "\n")
+    call sort(l:all_entries)
+    if len(l:all_entries) > 0
+        return l:all_entries[-1:-1][0]
+    endif
+endfunction
+
 function OpenJournal()
     let l:today = strftime("%Y-%m-%d")
     let l:today_journal = expand("~/.deft/todo:" . l:today . ".md")
-    let l:yesterday = strftime("%Y-%m-%d", localtime() - 86400)
-    let l:yesterday_journal = expand("~/.deft/todo:" . l:yesterday . ".md")
+    let l:yesterday_journal = s:GetLatestJournalEntry()
 
     if filereadable(l:today_journal)
         execute "tabnew" l:today_journal
     else
-        if filereadable(l:yesterday_journal)
+        if (l:yesterday_journal !=# "0") && filereadable(l:yesterday_journal)
             let l:yesterday_content = readfile(l:yesterday_journal, "b")
             call writefile(l:yesterday_content, l:today_journal, "b")
             execute "tabnew" l:today_journal
