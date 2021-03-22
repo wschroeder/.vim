@@ -349,8 +349,6 @@ function OpenJournal()
         call appendbufline(bufname("%"), 0, "TODO:" . l:today)
         execute "write"
     endif
-
-    normal! zM
 endfunction
 command! -nargs=0 OpenJournal call OpenJournal()
 nnoremap <silent> <leader>l :OpenJournal<cr>
