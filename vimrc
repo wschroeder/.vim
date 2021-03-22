@@ -210,7 +210,13 @@ let g:go_highlight_build_constraints = 1
 "-----------------------------------------------------------------------------
 let g:nv_search_paths = ["~/.deft"]
 let g:nv_default_extension = '.md'
-nnoremap <silent> <F12> :NV<cr>
+let g:nv_window_command = 'tabnew'
+
+function! StartNV()
+    execute "tabnew"
+    execute "NV"
+endfunction
+nnoremap <silent> <F12> :call StartNV()<cr>
 
 
 "-----------------------------------------------------------------------------
