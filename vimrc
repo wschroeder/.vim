@@ -315,8 +315,8 @@ cnoremap ƒ    <S-Right>
 cnoremap <A-Backspace>    <C-W>
 
 " Playing with vimrc
-nnoremap <leader>ev :tabnew $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ve :tabnew $MYVIMRC<cr>
+nnoremap <leader>vs :source $MYVIMRC<cr>
 
 " Journaling with notational/deft
 function s:GetLatestJournalEntry()
