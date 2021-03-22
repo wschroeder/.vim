@@ -185,7 +185,7 @@ endfunction
 
 augroup filetype_vim
     autocmd!
-    autocmd FileType vim call ConfigureVimrc()
+    autocmd BufNewFile,BufRead vimrc call ConfigureVimrc()
 augroup END
 
 
