@@ -242,6 +242,13 @@ let g:vim_markdown_folding_level = 0
 
 function ConfigureMarkdown()
     setlocal foldlevelstart=99
+    highlight link htmlH1 Statement
+    highlight link htmlH2 Statement
+    highlight link htmlH3 Statement
+    highlight link htmlH4 Statement
+    highlight link htmlH5 Statement
+    highlight link htmlH6 Statement
+    highlight link mkdHeading Function
     nnoremap <buffer> <Tab> za
     nnoremap <buffer> <S-Tab> zM
 endfunction
