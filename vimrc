@@ -21,11 +21,11 @@ endif
 " Includes and Plugins
 "-----------------------------------------------------------------------------
 call plug#begin()
+Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
 Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
-Plug 'godlygeek/tabular'
 Plug 'gabrielelana/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -81,6 +81,9 @@ let g:closetag_filetypes = 'html,xhtml,phtml,xml'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
+
+" Tabular
+vnoremap <Leader>a :Tabular /=
 
 " Undotree
 nnoremap <leader>u :UndotreeToggle<cr>
@@ -408,33 +411,6 @@ nnoremap <silent> <Esc>n :call CustomNewTab()<cr>
 nnoremap <silent> <Esc>t :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
 nnoremap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
-
-
-" Custom alignment with \a
-command! -nargs=? -range Align <line1>,<line2>call AlignSection('<args>')
-vnoremap <Leader>a :Align 
-function! AlignSection(regex) range
-  let extra = 1
-  let sep = empty(a:regex) ? '=' : a:regex
-  let maxpos = 0
-  let section = getline(a:firstline, a:lastline)
-  for line in section
-    let pos = match(line, ' *'.sep)
-    if maxpos < pos
-      let maxpos = pos
-    endif
-  endfor
-  call map(section, 'AlignLine(v:val, sep, maxpos, extra)')
-  call setline(a:firstline, section)
-endfunction
-function! AlignLine(line, sep, maxpos, extra)
-  let m = matchlist(a:line, '\(.\{-}\) \{-}\('.a:sep.'.*\)')
-  if empty(m)
-    return a:line
-  endif
-  let spaces = repeat(' ', a:maxpos - strlen(m[1]) + a:extra)
-  return m[1] . spaces . m[2]
-endfunction
 
 
 "-----------------------------------------------------------------------------
