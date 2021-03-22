@@ -30,6 +30,7 @@ Plug 'gabrielelana/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fireplace'
@@ -81,6 +82,8 @@ let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
+" Undotree
+nnoremap <leader>u :UndotreeToggle<cr>
 
 "-----------------------------------------------------------------------------
 " Global Options
