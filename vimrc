@@ -310,7 +310,7 @@ nnoremap <leader>vs :source $MYVIMRC<cr>
 
 " Journaling with notational/deft
 function s:GetLatestJournalEntry()
-    let l:all_entries = split(globpath(expand("~/.deft"), "todo:*.md"), "\n")
+    let l:all_entries = split(globpath(expand("~/.deft"), "todo-*.md"), "\n")
     call sort(l:all_entries)
     if len(l:all_entries) > 0
         return l:all_entries[-1:-1][0]
@@ -319,7 +319,7 @@ endfunction
 
 function OpenJournal()
     let l:today = strftime("%Y-%m-%d")
-    let l:today_journal = expand("~/.deft/todo:" . l:today . ".md")
+    let l:today_journal = expand("~/.deft/todo-" . l:today . ".md")
     let l:yesterday_journal = s:GetLatestJournalEntry()
 
     if filereadable(l:today_journal)
@@ -334,7 +334,7 @@ function OpenJournal()
             execute "tabnew" l:today_journal
         endif
 
-        call appendbufline(bufname("%"), 0, "TODO:" . l:today)
+        call appendbufline(bufname("%"), 0, l:today)
         execute "write"
     endif
 endfunction
