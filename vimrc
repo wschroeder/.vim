@@ -28,7 +28,6 @@ Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
 Plug 'plasticboy/vim-markdown'
@@ -70,10 +69,6 @@ endfunction
 let g:todo_root = '~'
 let g:todo_open_command = 'elinks'
 
-" Clap
-nnoremap <C-p> :Clap files<CR>
-let g:clap_open_action = { 'enter': 'tab split', 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit' }
-
 " Closetag
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.ex,*.eex,*.leex'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -81,6 +76,9 @@ let g:closetag_filetypes = 'html,xhtml,phtml,xml'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
+
+" FZF
+nnoremap <C-p> :FZF<CR>
 
 " Tabular
 vnoremap <Leader>a :Tabular /=
