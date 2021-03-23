@@ -395,7 +395,7 @@ command! -nargs=* -bang Rgi
                                               \ 'alt-d:page-down',
                                               \ 'ctrl-w:backward-kill-word',
                                               \ ], ','),
-                               \ '--preview="echo {} | awk -F: ''{print \$1 \" -H \" \$2 \" -r \" (\$2 - 10) \":\" (\$2 + 10)}'' | xargs bat -f 2>/dev/null || true"',
+                               \ '--preview="echo {} | awk -F: ''{print \$1 \" -H \" \$2 \" -r \" (\$2 < 10 ? 0 : (\$2 - 10)) \":\" (\$2 + 10)}'' | xargs bat -f 2>/dev/null || true"',
                                \ '--preview-window=' . join(filter(copy([
                                                                    \ 'right',
                                                                    \ ]),
