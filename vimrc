@@ -341,7 +341,7 @@ function OpenJournal()
             execute "tabnew" l:today_journal
         endif
 
-        call appendbufline(bufname("%"), 0, l:today)
+        call appendbufline(bufname("%"), 0, "TODO:" . l:today)
         execute "write"
     endif
 endfunction
