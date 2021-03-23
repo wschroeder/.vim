@@ -40,6 +40,7 @@ Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/LargeFile'
 Plug 'vlime/vlime'
+Plug 'zigford/vim-powershell'
 call plug#end()
 
 let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like underlining links
