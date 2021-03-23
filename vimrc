@@ -22,12 +22,12 @@ endif
 "-----------------------------------------------------------------------------
 call plug#begin()
 Plug 'godlygeek/tabular'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mbbill/undotree'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/nerdtree'
