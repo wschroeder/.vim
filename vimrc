@@ -225,6 +225,15 @@ let g:netrw_browse_split = 3
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
 
+function ConfigureNetrw()
+    syn match netrwBar /|/
+    highlight link netrwBar Comment
+endfunction
+
+augroup netrw_autos
+    autocmd!
+    autocmd FileType netrw call ConfigureNetrw()
+augroup END
 "-----------------------------------------------------------------------------
 " vim-markdown
 "-----------------------------------------------------------------------------
