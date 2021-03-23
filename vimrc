@@ -384,7 +384,7 @@ command! -nargs=* -bang Rgi
                                \ '--exact',
                                \ '--inline-info',
                                \ '--delimiter=":"',
-                               \ '--with-nth=' . '1..',
+                               \ '--with-nth=' . '3..',
                                \ '--tiebreak=' . 'length,begin' ,
                                \ '--expect=' . 'ctrl-s,ctrl-v,ctrl-t',
                                \ '--bind=' .  join([
