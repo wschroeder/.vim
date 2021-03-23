@@ -346,7 +346,9 @@ function! s:HandleRgSelection(lines) abort
     execute("normal! " . l:file_info[1] . "G")
 endfunction
 
-command! -nargs=* -bang Rg
+command! -nargs=1 -bang Rg grep <args> *
+
+command! -nargs=* -bang Rgi
       \ call fzf#run(
           \ fzf#wrap({
               \ 'sink*': function('<SID>HandleRgSelection'),
