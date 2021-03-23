@@ -23,13 +23,12 @@ endif
 call plug#begin()
 Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
-Plug 'https://github.com/alok/notational-fzf-vim'
+Plug 'alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
 Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mbbill/undotree'
-Plug 'mileszs/ack.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fireplace'
@@ -99,6 +98,7 @@ set cursorline                   " Highlight the current line the cursor is on
 set directory=$HOME/.vim-local/swp  " Swap files will all be at the home directory
 set expandtab                    " Tab keys is spaces instead of tab (C-V Tab will tab)
 set formatoptions=clnqr2         " Automatic format options (about all of them except auto-format)
+set grepprg=rg\ --vimgrep        " Use ripgrep/rg for grepping instead of grep
 set hidden                       " Can hide buffers when abandoning them (don't need to save to switch)
 set incsearch                    " Incremental search (go there while I am typing)
 set laststatus=2                 " Always show a status line
@@ -210,12 +210,11 @@ let g:nv_search_paths = ["~/.deft"]
 let g:nv_default_extension = '.md'
 let g:nv_window_command = 'tabnew'
 
-function! StartNV()
+function! s:StartNV()
     execute "tabnew"
     execute "NV"
 endfunction
-nnoremap <silent> <F12> :call StartNV()<cr>
-
+nnoremap <silent> <F12> :call <SID>StartNV()<cr>
 
 "-----------------------------------------------------------------------------
 " netrw - this comes with vim for directory exploration
@@ -225,15 +224,6 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 3
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
-
-"-----------------------------------------------------------------------------
-" ack for rg
-"-----------------------------------------------------------------------------
-let g:ackprg = 'rg --vimgrep --type-not sql --smart-case'
-let g:ack_use_cword_for_empty_search = 1
-cnoreabbrev rg Ack
-nnoremap <silent> [q :cprevious<CR>
-nnoremap <silent> ]q :cnext<CR>
 
 "-----------------------------------------------------------------------------
 " vim-markdown
@@ -276,6 +266,10 @@ vnoremap gx <Plug>(openbrowser-smart-search)
 " Commenting with commentary
 nnoremap <silent> <C-c> gcc
 vnoremap <silent> <C-c> gc
+
+" Easier navigation of quickfix
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
 
 " Mapping typical keys
 noremap <PageUp> 
@@ -344,6 +338,60 @@ function OpenJournal()
 endfunction
 command! -nargs=0 OpenJournal call OpenJournal()
 nnoremap <silent> <leader>l :OpenJournal<cr>
+
+" Fast searching with rg and fzf
+function! s:HandleRgSelection(lines) abort
+    let l:file_info = split(a:lines[2], ":")
+    execute("tabnew " . l:file_info[0])
+    execute("normal! " . l:file_info[1] . "G")
+endfunction
+
+command! -nargs=* -bang Rg
+      \ call fzf#run(
+          \ fzf#wrap({
+              \ 'sink*': function('<SID>HandleRgSelection'),
+              \ 'window': 'tabnew',
+              \ 'source': join([
+                   \ 'rg',
+                   \ '--follow',
+                   \ '--no-ignore-vcs',
+                   \ '--smart-case',
+                   \ '--line-number',
+                   \ '--color never',
+                   \ '--no-messages',
+                   \ '--no-heading',
+                   \ '--with-filename',
+                   \ '""',
+                   \ '2>/dev/null',
+                   \ ]),
+              \ 'down': '40%',
+              \ 'options': join([
+                               \ '--query ' . ((<q-args> is '') ?  '""' : shellescape(<q-args>)),
+                               \ '--print-query',
+                               \ '--ansi',
+                               \ '--multi',
+                               \ '--exact',
+                               \ '--inline-info',
+                               \ '--delimiter=":"',
+                               \ '--with-nth=' . '1..',
+                               \ '--tiebreak=' . 'length,begin' ,
+                               \ '--expect=' . 'ctrl-s,ctrl-v,ctrl-t',
+                               \ '--bind=' .  join([
+                                              \ 'alt-a:select-all',
+                                              \ 'alt-q:deselect-all',
+                                              \ 'alt-p:toggle-preview',
+                                              \ 'alt-u:page-up',
+                                              \ 'alt-d:page-down',
+                                              \ 'ctrl-w:backward-kill-word',
+                                              \ ], ','),
+                               \ '--preview="echo {} | awk -F: ''{print \$1 \" -H \" \$2 \" -r \" (\$2 - 10) \":\" (\$2 + 10)}'' | xargs bat -f 2>/dev/null || true"',
+                               \ '--preview-window=' . join(filter(copy([
+                                                                   \ 'right',
+                                                                   \ ]),
+                                                            \ 'v:val != "" ')
+                                                       \ ,':')
+                               \ ])},<bang>0))
+
 
 " Easier formatting
 function FormatOrIndent()
