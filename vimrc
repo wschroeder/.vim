@@ -26,6 +26,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
+Plug 'aquach/vim-http-client'
 Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mbbill/undotree'
