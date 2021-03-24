@@ -94,7 +94,7 @@ set autoindent                   " Copy indent from current line when starting n
 set autoread                     " When a file was changed outside of vim and not inside, autoread it again
 set background=dark              " Indicate for syntax on that we have a dark background
 set backspace=indent,eol,start   " We can backspace over autoindent, line breaks (to join lines), and start of insert
-set clipboard=unnamed            " Use the system clipboard instead of multiple clipboards
+set clipboard=unnamed,unnamedplus " Use the system clipboard instead of multiple clipboards
 set complete=.,w,b               " C-n/C-p scans current buf, other window bufs, and other loaded buffers
 set cursorline                   " Highlight the current line the cursor is on
 set directory=$HOME/.vim-local/swp  " Swap files will all be at the home directory
