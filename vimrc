@@ -457,11 +457,7 @@ function CustomNextTab()
     endif
 endfunction
 function CustomNewTab()
-    if tabpagenr('$') ==# 1
-        new
-    else
-        tabnew
-    endif
+    tabnew
 endfunction
 
 nnoremap <silent> <Esc>k :call CustomPreviousTab()<cr>
