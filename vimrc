@@ -211,6 +211,9 @@ function ConfigureVimfiler()
     " Swap these two keybindings in vimfiler to something more intuitive
     nmap <buffer> <nowait> o <Plug>(vimfiler_cd_or_edit)
     nmap <buffer> <nowait> <Enter> <Plug>(vimfiler_expand_or_edit)
+    nmap <buffer> <nowait> <Tab> <Plug>(vimfiler_toggle_mark_current_line)
+    vunmap <buffer> <Space>
+    nunmap <buffer> <Space>
 endfunction
 
 augroup vimfiler_autos
