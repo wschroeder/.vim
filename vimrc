@@ -205,15 +205,229 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'edit_action' : 'tabopen',
       \ })
 
+function! s:toggle_tree(is_recursive) abort "{{{
+  let file = vimfiler#get_file(b:vimfiler)
+  if empty(file) || vimfiler#get_filename() == '..'
+    if vimfiler#get_filename() == '..'
+      call vimfiler#mappings#cd('..')
+    endif
+    return
+  endif
+
+  if !file.vimfiler__is_directory
+    " Search parent directory.
+    for cnt in reverse(range(1, line('.')-1))
+      let nest_level = get(vimfiler#get_file(b:vimfiler, cnt),
+            \ 'vimfiler__nest_level', -1)
+      if (a:is_recursive && nest_level == 0) ||
+            \ (!a:is_recursive &&
+            \  nest_level >= 0 && nest_level < file.vimfiler__nest_level)
+        call cursor(cnt, 0)
+        call s:toggle_tree(a:is_recursive)
+        break
+      endif
+    endfor
+    return
+  endif
+
+  if file.vimfiler__is_opened
+    call s:unexpand_tree()
+  else
+    call s:expand_tree(a:is_recursive)
+  endif
+endfunction"}}}
+function! s:expand_tree(is_recursive) abort "{{{
+  let cursor_file = vimfiler#get_file(b:vimfiler)
+  if empty(cursor_file) || vimfiler#get_filename() == '..'
+    if vimfiler#get_filename() == '..'
+      call vimfiler#mappings#cd('..')
+    endif
+    return
+  endif
+
+  if !cursor_file.vimfiler__is_directory
+    " Search parent directory.
+    for cnt in reverse(range(1, line('.')-1))
+      let nest_level = get(vimfiler#get_file(b:vimfiler, cnt),
+            \ 'vimfiler__nest_level', -1)
+      if (a:is_recursive && nest_level == 0) ||
+            \ (!a:is_recursive &&
+            \  nest_level >= 0 &&
+            \ nest_level < cursor_file.vimfiler__nest_level)
+        call cursor(cnt, 0)
+        call s:expand_tree(a:is_recursive)
+        break
+      endif
+    endfor
+    return
+  endif
+
+  if cursor_file.vimfiler__is_opened
+    if a:is_recursive
+      call s:unexpand_tree()
+    endif
+    return
+  endif
+
+  let cursor_file.vimfiler__is_opened = 1
+
+  " Expand tree.
+  let nestlevel = cursor_file.vimfiler__nest_level + 1
+
+  if a:is_recursive
+    let original_files = vimfiler#mappings#expand_tree_rec(cursor_file)
+    let files =
+          \ unite#filters#matcher_vimfiler_mask#define().filter(
+          \ copy(original_files),
+          \ { 'input' : b:vimfiler.current_mask })
+  else
+    let original_files =
+          \ vimfiler#get_directory_files(cursor_file.action__path)
+    for file in original_files
+      " Initialize.
+      let file.vimfiler__nest_level = nestlevel
+    endfor
+
+    let files =
+          \ unite#filters#matcher_vimfiler_mask#define().filter(
+          \ copy(original_files),
+          \ { 'input' : b:vimfiler.current_mask })
+  endif
+
+  if !a:is_recursive && !b:vimfiler.is_visible_ignore_files
+    let files = vimfiler#helper#_call_filters(
+          \ files, b:vimfiler.context)
+  endif
+
+  let index = vimfiler#get_file_index(b:vimfiler, line('.'))
+  let index_orig =
+        \ vimfiler#get_original_file_index(line('.'))
+
+  call extend(b:vimfiler.all_files, files, index+1)
+  call extend(b:vimfiler.current_files, files, index+1)
+  call extend(b:vimfiler.original_files, original_files, index_orig+1)
+  let b:vimfiler.all_files_len += len(files)
+
+  if b:vimfiler.context.auto_expand
+        \ && !a:is_recursive && len(files) == 1
+        \ && files[0].vimfiler__is_directory
+    " Expand recursive.
+    " call cursor(line('.') + 1, 0)
+    call s:expand_tree(a:is_recursive)
+  elseif g:vimfiler_expand_jump_to_first_child && !a:is_recursive
+        \ || b:vimfiler.context.auto_expand
+    " Move to next line.
+    " call cursor(line('.') + 1, 0)
+  endif
+
+  call vimfiler#view#_redraw_screen()
+endfunction"}}}
+function! s:unexpand_tree() abort "{{{
+  let cursor_file = vimfiler#get_file(b:vimfiler)
+  if empty(cursor_file) || vimfiler#get_filename() == '..'
+    return
+  endif
+
+  if !cursor_file.vimfiler__is_directory ||
+        \ (!has_key(cursor_file, 'vimfiler__parent')
+        \ && !cursor_file.vimfiler__is_opened)
+    " Search parent directory.
+    for cnt in reverse(range(1, line('.')-1))
+      let nest_level = get(vimfiler#get_file(b:vimfiler, cnt),
+            \ 'vimfiler__nest_level', -1)
+      if nest_level >= 0 && nest_level < cursor_file.vimfiler__nest_level
+        call cursor(cnt, 0)
+        call s:unexpand_tree()
+        break
+      endif
+    endfor
+
+    return
+  endif
+
+  if !cursor_file.vimfiler__is_opened &&
+        \ has_key(cursor_file, 'vimfiler__parent')
+    let parent_file = cursor_file.vimfiler__parent
+    let parent_file.vimfiler__is_opened = 0
+
+    call remove(cursor_file, 'vimfiler__parent')
+    for key in keys(parent_file)
+      let cursor_file[key] = parent_file[key]
+    endfor
+  endif
+
+  let cursor_file.vimfiler__is_opened = 0
+  try
+    setlocal modifiable
+    setlocal noreadonly
+    call setline('.', vimfiler#view#_get_print_lines([cursor_file]))
+  finally
+    setlocal nomodifiable
+    setlocal readonly
+  endtry
+
+  " Unexpand tree.
+  let nestlevel = cursor_file.vimfiler__nest_level
+
+  " Search children.
+  let index = vimfiler#get_file_index(b:vimfiler, line('.'))
+  let end = index
+  for cursor_file in b:vimfiler.current_files[index+1 :]
+    if cursor_file.vimfiler__nest_level <= nestlevel
+      break
+    endif
+
+    let end += 1
+  endfor
+
+  if end - index > 0
+    let index_orig = vimfiler#get_original_file_index(line('.'))
+    let end_orig = index_orig
+    for file in b:vimfiler.original_files[index_orig+1 :]
+      if file.vimfiler__nest_level <= nestlevel
+        break
+      endif
+
+      let end_orig += 1
+    endfor
+
+    " Delete children.
+    let b:vimfiler.all_files = b:vimfiler.all_files[: index]
+          \ + b:vimfiler.all_files[end+1 :]
+    let b:vimfiler.all_files_len += len(b:vimfiler.all_files)
+    let b:vimfiler.current_files = b:vimfiler.current_files[: index]
+          \ + b:vimfiler.current_files[end+1 :]
+    let b:vimfiler.original_files = b:vimfiler.original_files[: index_orig]
+          \ + b:vimfiler.original_files[end_orig+1 :]
+    let pos = getpos('.')
+    call vimfiler#view#_redraw_screen()
+    call setpos('.', pos)
+  endif
+endfunction"}}}
+
 function ConfigureVimfiler()
     highlight link vimfilerNonMark Identifier
 
     " Swap these two keybindings in vimfiler to something more intuitive
     nmap <buffer> <nowait> o <Plug>(vimfiler_cd_or_edit)
     nmap <buffer> <nowait> <Enter> <Plug>(vimfiler_expand_or_edit)
+
+    " I would rather Tab does marking than space
     nmap <buffer> <nowait> <Tab> <Plug>(vimfiler_toggle_mark_current_line)
     vunmap <buffer> <Space>
     nunmap <buffer> <Space>
+
+    " Unmap H and L because I like to navigate quickly
+    nunmap <buffer> H
+    nunmap <buffer> L
+
+    " I do not like the cursor movement after expansion, and I can only
+    " disable that by copying and modifying the toggle_tree and expand_tree
+    " functions.
+    nnoremap <buffer><silent> <Plug>(vimfiler_expand_tree)
+          \ :<C-u>call <SID>toggle_tree(0)<CR>
+    nnoremap <buffer><silent> <Plug>(vimfiler_expand_tree_recursive)
+          \ :<C-u>call <SID>toggle_tree(1)<CR>
 endfunction
 
 augroup vimfiler_autos
