@@ -23,6 +23,8 @@ endif
 call plug#begin()
 Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
@@ -31,7 +33,6 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mbbill/undotree'
 Plug 'plasticboy/vim-markdown'
-Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -186,6 +187,35 @@ endfunction
 augroup filetype_vim
     autocmd!
     autocmd BufNewFile,BufRead vimrc call ConfigureVimrc()
+augroup END
+
+
+"-----------------------------------------------------------------------------
+" vimfiler
+"-----------------------------------------------------------------------------
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_tree_leaf_icon = ""
+let g:vimfiler_tree_opened_icon = "◿"
+let g:vimfiler_tree_closed_icon = "▶"
+let g:vimfiler_readonly_file_icon = "×"
+let g:vimfiler_tree_indentation = 2
+
+call vimfiler#custom#profile('default', 'context', {
+      \ 'safe' : 0,
+      \ 'edit_action' : 'tabopen',
+      \ })
+
+function ConfigureVimfiler()
+    highlight link vimfilerNonMark Identifier
+
+    " Swap these two keybindings in vimfiler to something more intuitive
+    nmap <buffer> <nowait> o <Plug>(vimfiler_cd_or_edit)
+    nmap <buffer> <nowait> <Enter> <Plug>(vimfiler_expand_or_edit)
+endfunction
+
+augroup vimfiler_autos
+    autocmd!
+    autocmd FileType vimfiler call ConfigureVimfiler()
 augroup END
 
 
