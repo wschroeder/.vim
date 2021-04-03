@@ -25,6 +25,7 @@ Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
@@ -33,7 +34,6 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mbbill/undotree'
 Plug 'plasticboy/vim-markdown'
-Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
@@ -43,6 +43,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/LargeFile'
 Plug 'vlime/vlime'
 Plug 'zigford/vim-powershell'
+
+" Clojure
+Plug 'guns/vim-sexp',    {'for': 'clojure'}
+Plug 'liquidz/vim-iced', {'for': 'clojure', 'branch': 'main'}
+Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure', 'branch': 'main'}
 call plug#end()
 
 let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like underlining links
@@ -79,6 +84,26 @@ let g:closetag_close_shortcut = '<leader>>'
 
 " FZF
 nnoremap <C-p> :FZF<CR>
+
+" Iced
+" export PATH=$PATH:~/.vim/plugged/vim-iced/bin
+" Instead of `lein repl`, you can run `iced repl`
+let g:iced_enable_default_key_mappings = v:true
+
+function ConfigureClojure()
+    " iced is spammy after IcedConnect due to the esc bell
+    setlocal belloff=esc
+
+    nmap <buffer> <C-h> <Plug>(iced_barf)
+    nmap <buffer> <C-l> <Plug>(iced_slurp)
+    imap <buffer> <C-h> <C-o><Plug>(iced_barf)
+    imap <buffer> <C-l> <C-o><Plug>(iced_slurp)
+endfunction
+
+augroup clojure_autos
+    autocmd!
+    autocmd FileType clojure call ConfigureClojure()
+augroup END
 
 " Tabular
 vnoremap <Leader>a :Tabular /=
