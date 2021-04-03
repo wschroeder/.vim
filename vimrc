@@ -49,8 +49,6 @@ let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like 
 set t_Co=256                    " Instruct vim to use 256-color mode
 let c_C99=1                     " [alternative-syntaxes] For std_c syntax to recognize C99
 let g:LargeFile=20              " [LargeFile.vim] Files larger than 20 MB will not have syntax enabled
-let g:EnhCommentifyUserBindings = 'yes'              " [EnhCommentify.vim] Use my own keybindings for comments
-let g:EnhCommentifyPretty       = 'Yes'              " [EnhCommentify.vim] Add extra space to the comment chars
 let g:paredit_mode = 0          " Paredit is annoying
 
 filetype plugin indent on       " Detect file type, and load plugins and indents for the filetype
