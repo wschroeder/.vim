@@ -516,6 +516,20 @@ let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nnoremap gx <Plug>(openbrowser-smart-search)
 vnoremap gx <Plug>(openbrowser-smart-search)
 
+
+"-----------------------------------------------------------------------------
+" yaml
+"-----------------------------------------------------------------------------
+function ConfigureYAML()
+    setlocal ts=2 sts=2 sw=2 expandtab
+endfunction
+
+augroup yaml_autos
+    autocmd!
+    autocmd FileType yaml call ConfigureYAML()
+augroup END
+
+
 "-----------------------------------------------------------------------------
 " Global Keymappings
 "-----------------------------------------------------------------------------
@@ -753,8 +767,6 @@ augroup general_autos
 
     autocmd BufNewFile,BufRead *.js set shiftwidth=2
     autocmd BufNewFile,BufRead *.hbs set shiftwidth=2
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
 
     " .asd files are also Lisp files
