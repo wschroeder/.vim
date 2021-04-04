@@ -87,6 +87,7 @@ let g:closetag_close_shortcut = '<leader>>'
 
 " coc
 let g:airline#extensions#coc#enabled = 1
+let g:coc_global_extensions = ['coc-json', 'coc-elixir', 'coc-python']
 inoremap <silent><expr> <C-@> coc#refresh()
 
 " FZF
