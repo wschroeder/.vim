@@ -82,6 +82,10 @@ let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
+" coc
+let g:airline#extensions#coc#enabled = 1
+inoremap <silent><expr> <C-@> coc#refresh()
+
 " FZF
 nnoremap <C-p> :FZF<CR>
 
