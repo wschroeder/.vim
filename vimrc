@@ -203,6 +203,20 @@ augroup END
 
 
 "-----------------------------------------------------------------------------
+" Python
+"-----------------------------------------------------------------------------
+function ConfigurePython()
+    nnoremap <buffer> <silent> <leader>ee :CocCommand python.execInTerminal<cr>
+    vnoremap <buffer> <silent> <leader>ee :<C-u>CocCommand python.execSelectionInTerminal<cr>
+endfunction
+
+augroup python_autos
+    autocmd!
+    autocmd FileType python call ConfigurePython()
+augroup END
+
+
+"-----------------------------------------------------------------------------
 " vimrc
 "-----------------------------------------------------------------------------
 function VimrcFoldText()
