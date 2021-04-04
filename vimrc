@@ -92,26 +92,6 @@ inoremap <silent><expr> <C-@> coc#refresh()
 " FZF
 nnoremap <C-p> :FZF<CR>
 
-" Iced
-" export PATH=$PATH:~/.vim/plugged/vim-iced/bin
-" Instead of `lein repl`, you can run `iced repl`
-let g:iced_enable_default_key_mappings = v:true
-
-function ConfigureClojure()
-    " iced is spammy after IcedConnect due to the esc bell
-    setlocal belloff=esc
-
-    nmap <buffer> <C-h> <Plug>(iced_barf)
-    nmap <buffer> <C-l> <Plug>(iced_slurp)
-    imap <buffer> <C-h> <C-o><Plug>(iced_barf)
-    imap <buffer> <C-l> <C-o><Plug>(iced_slurp)
-endfunction
-
-augroup clojure_autos
-    autocmd!
-    autocmd FileType clojure call ConfigureClojure()
-augroup END
-
 " Tabular
 vnoremap <Leader>a :Tabular /=
 
@@ -195,6 +175,29 @@ augroup autoread_autos
     " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+augroup END
+
+
+"-----------------------------------------------------------------------------
+" Clojure
+"-----------------------------------------------------------------------------
+" export PATH=$PATH:~/.vim/plugged/vim-iced/bin
+" Instead of `lein repl`, you can run `iced repl`
+let g:iced_enable_default_key_mappings = v:true
+
+function ConfigureClojure()
+    " iced is spammy after IcedConnect due to the esc bell
+    setlocal belloff=esc
+
+    nmap <buffer> <C-h> <Plug>(iced_barf)
+    nmap <buffer> <C-l> <Plug>(iced_slurp)
+    imap <buffer> <C-h> <C-o><Plug>(iced_barf)
+    imap <buffer> <C-l> <C-o><Plug>(iced_slurp)
+endfunction
+
+augroup clojure_autos
+    autocmd!
+    autocmd FileType clojure call ConfigureClojure()
 augroup END
 
 
