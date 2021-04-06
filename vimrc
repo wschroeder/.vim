@@ -46,7 +46,7 @@ Plug 'zigford/vim-powershell'
 " Clojure
 Plug 'guns/vim-sexp',    {'for': 'clojure'}
 Plug 'liquidz/vim-iced', {'for': 'clojure', 'branch': 'main'}
-Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure', 'branch': 'main'}
+Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
