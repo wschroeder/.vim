@@ -584,8 +584,8 @@ augroup END
 " Global Keymappings
 "-----------------------------------------------------------------------------
 " Commenting with commentary
-nnoremap <silent> <C-c> gcc
-vnoremap <silent> <C-c> gc
+nmap <silent> <C-c> <Plug>CommentaryLine
+vmap <silent> <C-c> <Plug>Commentary
 
 " Easier navigation of quickfix
 nnoremap <silent> [q :cprevious<CR>
