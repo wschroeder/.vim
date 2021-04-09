@@ -51,6 +51,10 @@ Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 " Elixir
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
+
+" SBCL
+Plug 'vlime/vlime', {'rtp': 'vim/'}
+
 call plug#end()
 
 let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like underlining links
@@ -578,6 +582,19 @@ augroup yaml_autos
     autocmd!
     autocmd FileType yaml call ConfigureYAML()
 augroup END
+
+
+"-----------------------------------------------------------------------------
+" SBCL
+"-----------------------------------------------------------------------------
+let g:vlime_leader = '<Space>'
+let g:vlime_cl_impl = "ros"
+
+function! VlimeBuildServerCommandFor_ros(vlime_loader, vlime_eval)
+    return ["ros", "run",
+                \ "--load", a:vlime_loader,
+                \ "--eval", a:vlime_eval]
+endfunction
 
 
 "-----------------------------------------------------------------------------
