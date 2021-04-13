@@ -545,7 +545,6 @@ let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_folding_level = 0
 
 function ConfigureMarkdown()
-    setlocal foldlevelstart=99
     highlight link htmlH1 Statement
     highlight link htmlH2 Statement
     highlight link htmlH3 Statement
