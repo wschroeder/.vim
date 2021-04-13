@@ -115,6 +115,7 @@ set complete=.,w,b               " C-n/C-p scans current buf, other window bufs,
 set cursorline                   " Highlight the current line the cursor is on
 set directory=$HOME/.vim-local/swp  " Swap files will all be at the home directory
 set expandtab                    " Tab keys is spaces instead of tab (C-V Tab will tab)
+set foldlevelstart=99            " Do not fold all the things by default
 set formatoptions=clnqr2         " Automatic format options (about all of them except auto-format)
 set grepprg=rg\ --vimgrep        " Use ripgrep/rg for grepping instead of grep
 set hidden                       " Can hide buffers when abandoning them (don't need to save to switch)
@@ -151,7 +152,6 @@ set wildmenu                     " When wildchar is activate, you can cycle thro
 set wildmode=list:longest        " When more than one match, list all matches and complete till longest common string
 syntax on
 colorscheme shadow
-
 
 " viminfo settings
 " '32  => remember marks for 32 previous files
