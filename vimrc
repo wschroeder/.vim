@@ -67,16 +67,6 @@ filetype plugin indent on       " Detect file type, and load plugins and indents
 runtime macros/matchit.vim      " % can match more things
 runtime ftplugin/man.vim        " Provides colorful Man command in vim
 
-" Using vlime
-" sbcl --load ~/.vim/plugged/vlime/lisp/start-vlime.lisp
-" ros run --load ~/.vim/plugged/vlime/lisp/start-vlime.lisp
-let g:vlime_cl_impl = "ros"
-function! VlimeBuildServerCommandFor_ros(vlime_loader, vlime_eval)
-    return ["ros", "run",
-                \ "--load", a:vlime_loader,
-                \ "--eval", a:vlime_eval]
-endfunction
-
 " Todo
 let g:todo_root = '~'
 let g:todo_open_command = 'elinks'
