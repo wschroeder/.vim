@@ -25,12 +25,18 @@ Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if executable("node")
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'airblade/vim-gitgutter'
-Plug 'alok/notational-fzf-vim'
+if executable("fzf")
+    Plug 'alok/notational-fzf-vim'
+endif
 Plug 'alvan/vim-closetag'
 Plug 'aquach/vim-http-client'
-Plug 'direnv/direnv.vim'
+if executable("direnv")
+    Plug 'direnv/direnv.vim'
+endif
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'LnL7/vim-nix'
 Plug 'mbbill/undotree'
@@ -48,7 +54,9 @@ Plug 'zigford/vim-powershell'
 " Clojure
 Plug 'guns/vim-sexp',    {'for': 'clojure'}
 Plug 'liquidz/vim-iced', {'for': 'clojure', 'branch': 'main'}
-Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
+if executable("node")
+    Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
+endif
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
