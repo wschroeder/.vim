@@ -38,6 +38,7 @@ if executable("direnv")
     Plug 'direnv/direnv.vim'
 endif
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'liuchengxu/vim-which-key'
 Plug 'LnL7/vim-nix'
 Plug 'mbbill/undotree'
 Plug 'plasticboy/vim-markdown'
@@ -91,7 +92,7 @@ let g:closetag_close_shortcut = '<leader>>'
 
 " coc
 let g:airline#extensions#coc#enabled = 1
-let g:coc_global_extensions = ['coc-json', 'coc-python']
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go']
 inoremap <silent><expr> <C-@> coc#refresh()
 
 " FZF
