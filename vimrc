@@ -790,7 +790,7 @@ nnoremap <silent> <Esc>k :call CustomPreviousTab()<cr>
 nnoremap <silent> <Esc>j :call CustomNextTab()<cr>
 nnoremap <silent> <Esc>c :if len(getwininfo()) ==# 1<cr>bd!<cr>else<cr>q!<cr>endif<cr>
 nnoremap <silent> <Esc>n :call CustomNewTab()<cr>
-nnoremap <silent> <Esc>t :tabnew<space><C-R>=expand("%:p")<cr> <Backspace>
+nnoremap <Esc>t :tabnew<space><C-R>=expand("%:p")<cr>
 nnoremap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
 onoremap s t_
