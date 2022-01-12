@@ -165,6 +165,7 @@ set viminfo='32,f1,<10,s10,n$HOME/.vim-local/viminfo
 
 " Status Line settings
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+let g:airline#extensions#tabline#enabled = 1
 
 "don't autoselect first item in omnicomplete, show if only one item (for preview)
 "remove preview if you don't want to see any documentation whatsoever.
@@ -256,7 +257,6 @@ let g:vimfiler_tree_indentation = 2
 
 call vimfiler#custom#profile('default', 'context', {
       \ 'safe' : 0,
-      \ 'edit_action' : 'tabopen',
       \ })
 
 function! s:toggle_tree(is_recursive) abort "{{{
@@ -511,10 +511,8 @@ let g:go_highlight_build_constraints = 1
 "-----------------------------------------------------------------------------
 let g:nv_search_paths = ["~/.deft"]
 let g:nv_default_extension = '.md'
-let g:nv_window_command = 'tabnew'
 
 function! s:StartNV()
-    execute "tabnew"
     execute "NV"
 endfunction
 nnoremap <silent> <F12> :call <SID>StartNV()<cr>
@@ -641,7 +639,7 @@ cnoremap ƒ    <S-Right>
 cnoremap <A-Backspace>    <C-W>
 
 " Playing with vimrc
-nnoremap <leader>ve :tabnew $MYVIMRC<cr>
+nnoremap <leader>ve :e $MYVIMRC<cr>
 nnoremap <leader>vs :source $MYVIMRC<cr>
 
 " Journaling with notational/deft
@@ -659,15 +657,15 @@ function OpenJournal()
     let l:yesterday_journal = s:GetLatestJournalEntry()
 
     if filereadable(l:today_journal)
-        execute "tabnew" l:today_journal
+        execute "edit" l:today_journal
     else
         if (l:yesterday_journal !=# "0") && filereadable(l:yesterday_journal)
             let l:yesterday_content = readfile(l:yesterday_journal, "b")
             call writefile(l:yesterday_content, l:today_journal, "b")
-            execute "tabnew" l:today_journal
+            execute "edit" l:today_journal
             call deletebufline(bufname("%"), 1, 1)
         else
-            execute "tabnew" l:today_journal
+            execute "edit" l:today_journal
         endif
 
         call appendbufline(bufname("%"), 0, "TODO:" . l:today)
@@ -680,7 +678,7 @@ nnoremap <silent> <leader>l :OpenJournal<cr>
 " Fast searching with rg and fzf
 function! s:HandleRgSelection(lines) abort
     let l:file_info = split(a:lines[2], ":")
-    execute("tabnew " . l:file_info[0])
+    execute("edit " . l:file_info[0])
     execute("normal! " . l:file_info[1] . "G")
 endfunction
 
@@ -690,7 +688,7 @@ command! -nargs=* -bang Rgi
       \ call fzf#run(
           \ fzf#wrap({
               \ 'sink*': function('<SID>HandleRgSelection'),
-              \ 'window': 'tabnew',
+              \ 'window': 'edit',
               \ 'source': join([
                    \ 'rg',
                    \ '--follow',
@@ -770,21 +768,13 @@ nnoremap <silent> <C-\><C-\> :call DeleteHorizontalSpace()<CR>
 
 " Tab navigation
 function CustomPreviousTab()
-    if tabpagenr('$') ==# 1
-        bp
-    else
-        tabprevious
-    endif
+    bp
 endfunction
 function CustomNextTab()
-    if tabpagenr('$') ==# 1
-        bn
-    else
-        tabnext
-    endif
+    bn
 endfunction
 function CustomNewTab()
-    tabnew
+    new
 endfunction
 
 nnoremap <silent> <Esc>k :call CustomPreviousTab()<cr>
