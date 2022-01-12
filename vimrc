@@ -166,6 +166,11 @@ set viminfo='32,f1,<10,s10,n$HOME/.vim-local/viminfo
 " Status Line settings
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+
 
 "don't autoselect first item in omnicomplete, show if only one item (for preview)
 "remove preview if you don't want to see any documentation whatsoever.
