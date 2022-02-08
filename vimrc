@@ -24,6 +24,7 @@ call plug#begin()
 Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim'
 Plug 'Shougo/vimfiler.vim'
 if executable("node")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
