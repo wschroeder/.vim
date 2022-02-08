@@ -525,6 +525,7 @@ function! s:StartNV()
     execute "NV"
 endfunction
 nnoremap <silent> <F12> :call <SID>StartNV()<cr>
+nnoremap <silent> <leader>s :call <SID>StartNV()<cr>
 
 "-----------------------------------------------------------------------------
 " netrw - this comes with vim for directory exploration
