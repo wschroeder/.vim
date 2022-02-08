@@ -65,6 +65,9 @@ endif
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 
+" Rust
+Plug 'rust-lang/rust.vim'
+
 " SBCL
 Plug 'vlime/vlime', {'rtp': 'vim/'}
 
@@ -94,7 +97,7 @@ let g:closetag_close_shortcut = '<leader>>'
 
 " coc
 let g:airline#extensions#coc#enabled = 1
-let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go']
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer']
 inoremap <silent><expr> <C-@> coc#refresh()
 
 " FZF
