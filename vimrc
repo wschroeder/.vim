@@ -800,6 +800,19 @@ onoremap s t_
 " Autocommands
 "-----------------------------------------------------------------------------
 
+set viewoptions-=options
+augroup vimrc
+    autocmd!
+    autocmd BufWinLeave *.md
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|      mkview!
+    \|  endif
+    autocmd BufWinEnter *.md
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|      silent loadview
+    \|  endif
+augroup END
+
 " If the buffer is in viminfo, go to the last recorded cursor position
 function! RestoreCursor()
     try
