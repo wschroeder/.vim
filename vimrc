@@ -480,9 +480,11 @@ function ConfigureVimfiler()
     vunmap <buffer> <Space>
     nunmap <buffer> <Space>
 
-    " Unmap H and L because I like to navigate quickly
+    " Basic movement I don't want vimfiler to take over
     nunmap <buffer> H
     nunmap <buffer> L
+    nunmap <buffer> M
+    nunmap <buffer> G
 
     " I do not like the cursor movement after expansion, and I can only
     " disable that by copying and modifying the toggle_tree and expand_tree
