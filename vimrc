@@ -93,7 +93,7 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 let g:closetag_filetypes = 'html,xhtml,phtml,xml'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_shortcut = '>'
-let g:closetag_close_shortcut = '<leader>>'
+let g:closetag_close_shortcut = ' >'
 
 " coc
 let g:airline#extensions#coc#enabled = 1
