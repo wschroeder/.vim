@@ -634,10 +634,6 @@ inoremap jk <Esc>
 " Searching what is highlighted
 vnoremap <leader>/ y/<C-R>"
 
-" Standard regex searching
-nnoremap / /\v
-vnoremap / /\v
-
 " Like emacs occur; occur on what you last searched for
 nnoremap g/ :set hlsearch<CR>:vimgrep /<C-R>//j %<CR>\|:cw<CR>
 
