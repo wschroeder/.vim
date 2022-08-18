@@ -794,6 +794,9 @@ nnoremap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
 onoremap s t_
 
+" Inserting markdown
+nnoremap <silent> <leader>` o<CR>```<CR>```<CR><Esc>kO<Esc>
+
 "-----------------------------------------------------------------------------
 " Autocommands
 "-----------------------------------------------------------------------------
