@@ -815,16 +815,6 @@ augroup vimrc
 augroup END
 
 " If the buffer is in viminfo, go to the last recorded cursor position
-function! RestoreCursor()
-    try
-        if bufname(".") !~ "COMMIT_EDITMSG"
-            normal! `"zz
-        endif
-    catch
-        return 1
-    endtry
-endfunction
-
 " Configure mail buffers (especially for mutt usage)
 function! ConfigureMail()
   set ft=mail
@@ -842,8 +832,6 @@ endfunction
 
 augroup general_autos
     autocmd!
-
-    autocmd BufNewFile,BufReadPost,BufNew * call RestoreCursor()
 
     autocmd BufNewFile,BufRead */mutt-* call ConfigureMail()
 
