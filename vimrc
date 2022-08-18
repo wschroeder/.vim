@@ -701,7 +701,6 @@ command! -nargs=* -bang Rgi
               \ 'source': join([
                    \ 'rg',
                    \ '--follow',
-                   \ '--no-ignore-vcs',
                    \ '--smart-case',
                    \ '--line-number',
                    \ '--color never',
