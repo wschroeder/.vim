@@ -51,6 +51,7 @@ Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-crystal/vim-crystal'
 Plug 'vim-scripts/LargeFile'
+Plug 'vim-scripts/utl.vim'
 Plug 'vlime/vlime'
 Plug 'zigford/vim-powershell'
 
