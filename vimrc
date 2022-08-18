@@ -830,6 +830,16 @@ function! ConfigureGo()
   set nolist
 endfunction
 
+function! ConfigureTypescript()
+  set shiftwidth=2
+  set tabstop=2
+endfunction
+
+function! PrettierTypescript(fileName)
+    silent execute '!npx prettier --write ' . a:fileName
+    silent redraw!
+endfunction
+
 augroup general_autos
     autocmd!
 
@@ -853,6 +863,11 @@ augroup general_autos
     autocmd BufNewFile,BufRead,BufWinEnter *.asd,*.t,*.pl,*.pm,*.lisp,*.clj,*vimrc,*.vim,*.py,*.c,*.js,*.html,*.htm syntax sync fromstart
 
     autocmd BufNewFile,BufRead,BufWinEnter *.go call ConfigureGo()
+    autocmd BufNewFile,BufRead,BufWinEnter *.tsx,*.ts call ConfigureTypescript()
+
+    if executable("npx") && executable("./node_modules/.bin/prettier")
+        autocmd BufWritePost *.tsx,*.ts call PrettierTypescript(expand('<afile>'))
+    endif
 augroup END
 
 "-----------------------------------------------------------------------------
