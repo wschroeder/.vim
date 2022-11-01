@@ -73,6 +73,12 @@ Plug 'rust-lang/rust.vim'
 " SBCL
 Plug 'vlime/vlime', {'rtp': 'vim/'}
 
+" JS/JSX/Typescript/GQL
+Plug 'pangloss/vim-javascript'    " JavaScript support
+Plug 'leafgarland/typescript-vim' " TypeScript syntax
+Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+Plug 'jparise/vim-graphql'        " GraphQL syntax
+
 call plug#end()
 
 let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like underlining links
@@ -97,11 +103,6 @@ let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = ' >'
 
-" coc
-let g:airline#extensions#coc#enabled = 1
-let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer']
-inoremap <silent><expr> <C-@> coc#refresh()
-
 " FZF
 nnoremap <C-p> :FZF<CR>
 
@@ -110,6 +111,7 @@ vnoremap <Leader>a :Tabular /=
 
 " Undotree
 nnoremap <leader>u :UndotreeToggle<cr>
+
 
 "-----------------------------------------------------------------------------
 " Global Options
@@ -195,6 +197,31 @@ augroup autoread_autos
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
+
+
+"-----------------------------------------------------------------------------
+" coc
+"-----------------------------------------------------------------------------
+" Took a lot of advice from https://pragmaticpineapple.com/ultimate-vim-typescript-setup/
+
+let g:airline#extensions#coc#enabled = 1
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer', 'coc-tsserver']
+inoremap <silent><expr> <C-@> coc#refresh()
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>\<c-r>=EndwiseDiscretionary()\<CR>"
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 
 "-----------------------------------------------------------------------------
