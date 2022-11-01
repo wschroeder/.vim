@@ -38,6 +38,7 @@ Plug 'aquach/vim-http-client'
 if executable("direnv")
     Plug 'direnv/direnv.vim'
 endif
+Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'liuchengxu/vim-which-key'
 Plug 'LnL7/vim-nix'
