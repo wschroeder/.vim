@@ -568,6 +568,7 @@ function ConfigureMarkdown()
     highlight link mkdHeading Function
     nnoremap <buffer> <Tab> za
     nnoremap <buffer> <S-Tab> zM
+    syntax sync minlines=10000  " A little slower but useful for larger markdown blocks
 endfunction
 
 augroup markdown_autos
