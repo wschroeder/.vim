@@ -865,6 +865,11 @@ augroup general_autos
     autocmd BufNewFile,BufRead,BufWinEnter *.go call ConfigureGo()
     autocmd BufNewFile,BufRead,BufWinEnter *.tsx,*.ts call ConfigureTypescript()
 
+    augroup highlight_current_word
+      au!
+      au CursorHold * :silent! exec 'match CurrentWord /\V\<' . expand('<cword>') . '\>/'
+    augroup END
+
     if executable("npx") && executable("./node_modules/.bin/prettier")
         autocmd BufWritePost *.tsx,*.ts call PrettierTypescript(expand('<afile>'))
     endif
