@@ -47,7 +47,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-crystal/vim-crystal'
@@ -136,6 +135,7 @@ set listchars=tab:__,trail:.     " Tabs look like ____, and trailing spaces look
 set matchpairs=(:),{:},[:]       " Show highlight match for these symbols
 set nobackup                     " Don't make backups of files
 set nohlsearch                   " Highlights search matches
+set nostartofline                " When switching buffers, do not move the cursor to the start of the line
 set nowrap                       " Turn off visual line wrap
 set nowritebackup                " Turn off making a backup before overwriting a file
 set number
@@ -169,7 +169,11 @@ colorscheme shadow
 " <10  => Max number of lines saved for each register (10)
 " s10  => Max size of a register in kB (10 kB)
 " n... => Name of the viminfo file
-set viminfo='32,f1,<10,s10,n$HOME/.vim-local/viminfo
+if has('nvim')
+    set viminfo='32,f1,<10,s10,n$HOME/.vim-local/nviminfo
+else
+    set viminfo='32,f1,<10,s10,n$HOME/.vim-local/viminfo
+endif
 
 " Status Line settings
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
@@ -205,12 +209,12 @@ augroup END
 " Took a lot of advice from https://pragmaticpineapple.com/ultimate-vim-typescript-setup/
 
 let g:airline#extensions#coc#enabled = 1
-let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer', 'coc-tsserver', 'coc-elixir']
 inoremap <silent><expr> <C-@> coc#refresh()
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>\<c-r>=EndwiseDiscretionary()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -656,6 +660,8 @@ noremap <Home> 0
 noremap <End> $
 noremap <C-Home> 1G
 noremap <C-End> G$
+noremap <silent> <C-d> 12j
+noremap <silent> <C-u> 12k
 
 " Fast ESC alternative in Insert mode
 inoremap jk <Esc>
@@ -826,6 +832,14 @@ onoremap s t_
 " Inserting markdown
 nnoremap <silent> <leader>` o<CR>```<CR>```<CR><Esc>kO<Esc>
 
+" Integrate with github browsing
+function! GithubBrowse() range
+    execute ':!gh browse ' . expand('%') . ':' . a:firstline . '-' . a:lastline
+endfunction
+nnoremap <silent> <leader>gl :call GithubBrowse()<cr>
+vnoremap <silent> <leader>gl :call GithubBrowse()<cr>
+
+
 "-----------------------------------------------------------------------------
 " Autocommands
 "-----------------------------------------------------------------------------
@@ -864,8 +878,13 @@ function! ConfigureTypescript()
   set tabstop=2
 endfunction
 
-function! PrettierTypescript(fileName)
-    silent execute '!npx prettier --write ' . a:fileName
+" function! PrettierTypescript(fileName)
+"     silent execute '!npx prettier --write ' . a:fileName
+"     silent redraw!
+" endfunction
+
+function! EslintTypescript(fileName)
+    silent execute '!eslint --fix ' . a:fileName
     silent redraw!
 endfunction
 
@@ -889,7 +908,7 @@ augroup general_autos
     autocmd BufNewFile,BufRead *.t set ft=perl
 
     " Programming language files tend to be small, so we'll do full syntax
-    autocmd BufNewFile,BufRead,BufWinEnter *.asd,*.t,*.pl,*.pm,*.lisp,*.clj,*vimrc,*.vim,*.py,*.c,*.js,*.html,*.htm syntax sync fromstart
+    autocmd BufNewFile,BufRead,BufWinEnter *.asd,*.t,*.pl,*.pm,*.lisp,*.clj,*vimrc,*.vim,*.py,*.c,*.js,*.html,*.htm,*.tsx,*.ts syntax sync fromstart
 
     autocmd BufNewFile,BufRead,BufWinEnter *.go call ConfigureGo()
     autocmd BufNewFile,BufRead,BufWinEnter *.tsx,*.ts call ConfigureTypescript()
@@ -899,8 +918,12 @@ augroup general_autos
       au CursorHold * :silent! exec 'match CurrentWord /\V\<' . expand('<cword>') . '\>/'
     augroup END
 
-    if executable("npx") && executable("./node_modules/.bin/prettier")
-        autocmd BufWritePost *.tsx,*.ts call PrettierTypescript(expand('<afile>'))
+    " if executable("npx") && executable("./node_modules/.bin/prettier")
+    "     autocmd BufWritePost *.tsx,*.ts call PrettierTypescript(expand('<afile>'))
+    " endif
+
+    if executable("eslint")
+        autocmd BufWritePost *.tsx,*.ts call EslintTypescript(expand('<afile>'))
     endif
 augroup END
 

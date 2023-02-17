@@ -2,5 +2,6 @@
     "coc.source.iced.enable": true,
     "suggest.autoTrigger": "none",
     "python.linting.pylintPath": "pylint",
-    "python.pythonPath": "python"
+    "python.pythonPath": "python",
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
