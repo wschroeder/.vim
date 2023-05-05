@@ -1,5 +1,4 @@
 {
-    "coc.source.iced.enable": true,
     "suggest.autoTrigger": "none",
     "python.linting.pylintPath": "pylint",
     "python.pythonPath": "python",

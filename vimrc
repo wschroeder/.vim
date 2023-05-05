@@ -52,15 +52,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-crystal/vim-crystal'
 Plug 'vim-scripts/LargeFile'
 Plug 'vim-scripts/utl.vim'
-Plug 'vlime/vlime'
 Plug 'zigford/vim-powershell'
-
-" Clojure
-Plug 'guns/vim-sexp',    {'for': 'clojure'}
-Plug 'liquidz/vim-iced', {'for': 'clojure', 'branch': 'main'}
-if executable("node")
-    Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
-endif
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
@@ -68,9 +60,6 @@ Plug 'slashmili/alchemist.vim'
 
 " Rust
 Plug 'rust-lang/rust.vim'
-
-" SBCL
-Plug 'vlime/vlime', {'rtp': 'vim/'}
 
 " JS/JSX/Typescript/GQL
 Plug 'pangloss/vim-javascript'    " JavaScript support
@@ -226,29 +215,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
-
-"-----------------------------------------------------------------------------
-" Clojure
-"-----------------------------------------------------------------------------
-" export PATH=$PATH:~/.vim/plugged/vim-iced/bin
-" Instead of `lein repl`, you can run `iced repl`
-let g:iced_enable_default_key_mappings = v:true
-
-function ConfigureClojure()
-    " iced is spammy after IcedConnect due to the esc bell
-    setlocal belloff=esc
-
-    nmap <buffer> <C-h> <Plug>(iced_barf)
-    nmap <buffer> <C-l> <Plug>(iced_slurp)
-    imap <buffer> <C-h> <C-o><Plug>(iced_barf)
-    imap <buffer> <C-l> <C-o><Plug>(iced_slurp)
-endfunction
-
-augroup clojure_autos
-    autocmd!
-    autocmd FileType clojure call ConfigureClojure()
-augroup END
 
 
 "-----------------------------------------------------------------------------
@@ -627,19 +593,6 @@ augroup yaml_autos
     autocmd!
     autocmd FileType yaml call ConfigureYAML()
 augroup END
-
-
-"-----------------------------------------------------------------------------
-" SBCL
-"-----------------------------------------------------------------------------
-let g:vlime_leader = '<Space>'
-let g:vlime_cl_impl = "ros"
-
-function! VlimeBuildServerCommandFor_ros(vlime_loader, vlime_eval)
-    return ["ros", "run",
-                \ "--load", a:vlime_loader,
-                \ "--eval", a:vlime_eval]
-endfunction
 
 
 "-----------------------------------------------------------------------------
