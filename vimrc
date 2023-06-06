@@ -67,6 +67,9 @@ Plug 'leafgarland/typescript-vim' " TypeScript syntax
 Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
 Plug 'jparise/vim-graphql'        " GraphQL syntax
 
+" AI
+Plug 'Exafunction/codeium.vim', {'branch': 'main'}
+
 call plug#end()
 
 let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like underlining links
@@ -593,6 +596,32 @@ augroup yaml_autos
     autocmd!
     autocmd FileType yaml call ConfigureYAML()
 augroup END
+
+
+"-----------------------------------------------------------------------------
+" Codeium
+"-----------------------------------------------------------------------------
+
+let g:codeium_enabled = v:true
+let g:codeium_filetypes = {
+    \ "markdown": v:false,
+    \ "elixir": v:true,
+    \ }
+
+call airline#parts#define_function('codeium_enabled', 'codeium#GetStatusString')
+let g:airline_section_y = airline#section#create_right(['codeium_enabled'])
+
+let g:codeium_disable_bindings = 1
+imap <script><silent><nowait><expr> <C-u> codeium#Accept()
+imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
+imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
+imap <C-l> <Cmd>call codeium#Clear()<CR>
+
+" let g:copilot_no_default_key_mappings = v:true
+" imap <C-u> <Plug>(copilot-accept)
+" imap <C-j> <Plug>(copilot-next)
+" imap <C-k> <Plug>(copilot-previous)
+" imap <C-l> <Plug>(copilot-dismiss)
 
 
 "-----------------------------------------------------------------------------
