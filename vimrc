@@ -29,7 +29,7 @@ Plug 'Shougo/vimfiler.vim'
 if executable("node")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter', {'branch': 'main'}
 if executable("fzf")
     Plug 'alok/notational-fzf-vim'
 endif
@@ -56,7 +56,7 @@ Plug 'zigford/vim-powershell'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
-Plug 'slashmili/alchemist.vim'
+Plug 'slashmili/alchemist.vim', {'branch': 'main'}
 
 " Rust
 Plug 'rust-lang/rust.vim'
