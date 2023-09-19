@@ -645,6 +645,7 @@ noremap <C-Home> 1G
 noremap <C-End> G$
 noremap <silent> <C-d> 12j
 noremap <silent> <C-u> 12k
+noremap <silent> <Leader>f :Rgi<CR>
 
 " Fast ESC alternative in Insert mode
 inoremap jk <Esc>
@@ -736,8 +737,8 @@ command! -nargs=* -bang Rgi
                                \ '--multi',
                                \ '--exact',
                                \ '--inline-info',
-                               \ '--delimiter=":"',
-                               \ '--with-nth=' . '3..',
+                               \ '--delimiter=":|\s+"',
+                               \ '--with-nth=' . '1,4..',
                                \ '--tiebreak=' . 'length,begin' ,
                                \ '--expect=' . 'ctrl-s,ctrl-v,ctrl-t',
                                \ '--bind=' .  join([
