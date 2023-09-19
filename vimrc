@@ -737,8 +737,8 @@ command! -nargs=* -bang Rgi
                                \ '--multi',
                                \ '--exact',
                                \ '--inline-info',
-                               \ '--delimiter=":|\s+"',
-                               \ '--with-nth=' . '1,4..',
+                               \ '--delimiter="\s+"',
+                               \ '--with-nth=' . '2..',
                                \ '--tiebreak=' . 'length,begin' ,
                                \ '--expect=' . 'ctrl-s,ctrl-v,ctrl-t',
                                \ '--bind=' .  join([
