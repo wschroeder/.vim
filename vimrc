@@ -34,6 +34,7 @@ if executable("fzf")
     Plug 'alok/notational-fzf-vim'
 endif
 Plug 'alvan/vim-closetag'
+Plug 'AndrewRadev/splitjoin.vim', {'branch': 'main'}
 Plug 'aquach/vim-http-client'
 if executable("direnv")
     Plug 'direnv/direnv.vim'
