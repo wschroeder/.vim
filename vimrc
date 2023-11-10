@@ -44,6 +44,7 @@ Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': [
 Plug 'liuchengxu/vim-which-key'
 Plug 'LnL7/vim-nix'
 Plug 'mbbill/undotree'
+Plug 'michaeljsmith/vim-indent-object'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
