@@ -814,6 +814,10 @@ nnoremap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
 onoremap s t_
 
+" Quickfix navigation
+nnoremap <silent> <C-k> :cprevious<CR>
+nnoremap <silent> <C-j> :cnext<CR>
+
 " Inserting markdown
 nnoremap <silent> <leader>` o<CR>```<CR>```<CR><Esc>kO<Esc>
 
