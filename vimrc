@@ -44,6 +44,7 @@ Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': [
 Plug 'liuchengxu/vim-which-key'
 Plug 'LnL7/vim-nix'
 Plug 'mbbill/undotree'
+Plug 'matschaffer/vim-islime2'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-fugitive'
@@ -221,6 +222,15 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+
+"-----------------------------------------------------------------------------
+" iSlime
+"-----------------------------------------------------------------------------
+let g:islime2_29_mode=1
+nnoremap <leader>ck :%y r<cr>:call islime2#iTermSendNext(@r)<CR>
+vnoremap <leader>cc :<C-u>call islime2#iTermSendOperator(visualmode(), 1)<CR>
+nnoremap <leader>cc vip:<C-u>call islime2#iTermSendOperator(visualmode(), 1)<CR>
 
 
 "-----------------------------------------------------------------------------
