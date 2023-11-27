@@ -57,6 +57,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-crystal/vim-crystal'
 Plug 'vim-scripts/LargeFile'
 Plug 'vim-scripts/utl.vim'
+Plug 'vim-utils/vim-vertical-move'
 Plug 'zigford/vim-powershell'
 
 " Elixir
@@ -198,6 +199,16 @@ augroup autoread_autos
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
+
+
+"-----------------------------------------------------------------------------
+" vim-vertical-move
+"-----------------------------------------------------------------------------
+let g:vertical_move_default_mapping = 0
+nmap <silent> <leader>j <Plug>(vertical_move_down)
+nmap <silent> <leader>k <Plug>(vertical_move_up)
+xmap <silent> <leader>j <Plug>(vertical_move_down)
+xmap <silent> <leader>k <Plug>(vertical_move_up)
 
 
 "-----------------------------------------------------------------------------
