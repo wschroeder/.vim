@@ -34,7 +34,6 @@ if executable("fzf")
     Plug 'alok/notational-fzf-vim'
 endif
 Plug 'alvan/vim-closetag'
-Plug 'AndrewRadev/splitjoin.vim', {'branch': 'main'}
 Plug 'aquach/vim-http-client'
 if executable("direnv")
     Plug 'direnv/direnv.vim'
@@ -533,6 +532,7 @@ augroup END
 "-----------------------------------------------------------------------------
 let g:gitgutter_diff_args = '-w'   " Don't diff the whitespace
 
+
 "-----------------------------------------------------------------------------
 " vim-go
 "-----------------------------------------------------------------------------
@@ -543,6 +543,7 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
 
 "-----------------------------------------------------------------------------
 " notational-fzf-vim
@@ -555,6 +556,7 @@ function! s:StartNV()
 endfunction
 nnoremap <silent> <F12> :call <SID>StartNV()<cr>
 nnoremap <silent> <leader>s :call <SID>StartNV()<cr>
+
 
 "-----------------------------------------------------------------------------
 " netrw - this comes with vim for directory exploration
@@ -574,6 +576,8 @@ augroup netrw_autos
     autocmd!
     autocmd FileType netrw call ConfigureNetrw()
 augroup END
+
+
 "-----------------------------------------------------------------------------
 " vim-markdown
 "-----------------------------------------------------------------------------
@@ -851,6 +855,22 @@ endfunction
 nnoremap <silent> <leader>gl :call GithubBrowse()<cr>
 vnoremap <silent> <leader>gl :call GithubBrowse()<cr>
 
+function! SplitSeries()
+  let l:line = getline(".")
+
+  " Handle splitting on Elixir pipes
+  if l:line =~ "|>"
+    let l:indention = matchstr(l:line, '^\s*')
+
+    if substitute(l:line, "|>.*$", "", "") =~ "="
+      let l:indention = l:indention . "  "
+      silent execute 's/=\s*/=' . l:indention . '/'
+    endif
+
+    silent execute 's/\s*|>\s*/' . l:indention . '|> /g'
+  endif
+endfunction
+nnoremap <silent> gS :call SplitSeries()<cr>
 
 "-----------------------------------------------------------------------------
 " Autocommands
