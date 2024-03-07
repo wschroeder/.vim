@@ -40,6 +40,7 @@ if executable("direnv")
 endif
 Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'kana/vim-textobj-user'
 Plug 'liuchengxu/vim-which-key'
 Plug 'LnL7/vim-nix'
 Plug 'mbbill/undotree'
@@ -198,6 +199,19 @@ augroup autoread_autos
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
+
+
+"-----------------------------------------------------------------------------
+" vim-textobj-user
+"-----------------------------------------------------------------------------
+call textobj#user#plugin('elixir', {
+\   'do-or-fn-block': {
+\     'pattern': ['\<do\>\|\<fn\>', '\<end\>'],
+\     'select-a': 'ae',
+\     'select-i': 'ie',
+\     'scan': 'cursor',
+\   },
+\ })
 
 
 "-----------------------------------------------------------------------------
