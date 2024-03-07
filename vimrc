@@ -687,7 +687,19 @@ noremap <C-Home> 1G
 noremap <C-End> G$
 noremap <silent> <C-d> 12j
 noremap <silent> <C-u> 12k
-noremap <silent> <Leader>f :Rgi<CR>
+noremap <silent> <Leader><C-f> :Rgi<CR>
+
+function RgiWithDir()
+    " User specifies a directory, we cd to it, we call :Rgi, and we cd back out.
+    let l:original_dir = getcwd()
+    let l:dir = input('Directory (default: '.l:original_dir.'): ', '', 'dir')
+    if l:dir != ''
+        execute ':cd ' . l:dir
+    endif
+    execute ":Rgi"
+    execute ':cd ' . l:original_dir
+endfunction
+noremap <silent> <Leader>f :call RgiWithDir()<CR>
 
 " Fast ESC alternative in Insert mode
 inoremap jk <Esc>
