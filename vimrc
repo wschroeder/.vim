@@ -38,6 +38,7 @@ Plug 'aquach/vim-http-client'
 if executable("direnv")
     Plug 'direnv/direnv.vim'
 endif
+Plug 'easymotion/vim-easymotion'
 Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'kana/vim-textobj-user'
@@ -668,6 +669,26 @@ imap <C-l> <Cmd>call codeium#Clear()<CR>
 
 
 "-----------------------------------------------------------------------------
+" Easy EasyMotion
+"-----------------------------------------------------------------------------
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+map <Leader><Leader> <Plug>(easymotion-bd-w)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+" nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+
+"-----------------------------------------------------------------------------
 " Global Keymappings
 "-----------------------------------------------------------------------------
 " Commenting with commentary
@@ -836,16 +857,6 @@ vnoremap <silent> <Esc>q :call FormatOrIndent()<CR>
 inoremap <silent> œ <Esc>:call FormatOrIndent()<CR>a
 nnoremap <silent> œ :call FormatOrIndent()<CR>
 vnoremap <silent> œ :call FormatOrIndent()<CR>
-
-" Horizontal space deletion
-function DeleteHorizontalSpace()
-    call searchpos(' *', 'bc')
-    if getline(".")[col(".") - 1] =~ "\\s"
-        normal! dw
-    endif
-endfunction
-inoremap <silent> <C-\><C-\> <C-O>:call DeleteHorizontalSpace()<CR>
-nnoremap <silent> <C-\><C-\> :call DeleteHorizontalSpace()<CR>
 
 " Tab navigation
 function CustomPreviousTab()
