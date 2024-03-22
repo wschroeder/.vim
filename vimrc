@@ -909,6 +909,20 @@ function! SplitSeries()
 endfunction
 nnoremap <silent> gS :call SplitSeries()<cr>
 
+function! PrefixElixirPipe()
+  let [l:bufnum, l:lnum, l:col, l:off] = getpos('.')
+  normal! ^
+  let [l:bufnum_start, l:lnum_start, l:col_start, l:off_start] = getpos('.')
+  normal! i|> 
+
+  if l:col_start < l:col
+    call setpos('.', [l:bufnum, l:lnum, l:col + 3, l:off])
+  else
+    call setpos('.', [l:bufnum, l:lnum, l:col, l:off])
+  endif
+endfunction
+noremap <silent> <C-\> :call PrefixElixirPipe()<cr>
+
 "-----------------------------------------------------------------------------
 " Autocommands
 "-----------------------------------------------------------------------------
