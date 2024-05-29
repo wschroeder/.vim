@@ -254,7 +254,7 @@ nmap <silent> gr <Plug>(coc-references)
 " iSlime
 "-----------------------------------------------------------------------------
 let g:islime2_29_mode=1
-nnoremap <leader>ck :%y r<cr>:call islime2#iTermSendNext(@r)<CR>
+nnoremap <leader>ck :%y r<cr>:call islime2#iTermSendNext(substitute(@r, '\\', '\\\\', 'g'))<CR>
 vnoremap <leader>cc :<C-u>call islime2#iTermSendOperator(visualmode(), 1)<CR>
 nnoremap <leader>cc vip:<C-u>call islime2#iTermSendOperator(visualmode(), 1)<CR>
 
@@ -695,10 +695,6 @@ map <Leader>k <Plug>(easymotion-k)
 nmap <silent> <C-c> <Plug>CommentaryLine
 vmap <silent> <C-c> <Plug>Commentary
 
-" Easier navigation of quickfix
-nnoremap <silent> [q :cprevious<CR>
-nnoremap <silent> ]q :cnext<CR>
-
 " Mapping typical keys
 noremap <PageUp> 
 noremap <PageDown> 
@@ -708,19 +704,20 @@ noremap <C-Home> 1G
 noremap <C-End> G$
 noremap <silent> <C-d> 12j
 noremap <silent> <C-u> 12k
-noremap <silent> <Leader><C-f> :Rgi<CR>
 
-function RgiWithDir()
+function! RgiWithDir(search_string = "")
     " User specifies a directory, we cd to it, we call :Rgi, and we cd back out.
     let l:original_dir = getcwd()
     let l:dir = input('Directory (default: '.l:original_dir.'): ', '', 'dir')
     if l:dir != ''
         execute ':cd ' . l:dir
     endif
-    execute ":Rgi"
+    execute ":Rgi " . a:search_string
     execute ':cd ' . l:original_dir
 endfunction
-noremap <silent> <Leader>f :call RgiWithDir()<CR>
+nnoremap <silent> <leader>f yiw:call RgiWithDir("<C-r>"")<CR>
+vnoremap <silent> <leader>f y:call RgiWithDir("<C-r>"")<CR>
+vnoremap <silent> <leader><C-f> y:call RgiWithDir("<C-r>"")<CR>
 
 " Fast ESC alternative in Insert mode
 inoremap jk <Esc>
@@ -878,9 +875,53 @@ nnoremap Q :echo "I just saved you from Q"<cr>
 noremap gV `[v`]
 onoremap s t_
 
-" Quickfix navigation
-nnoremap <silent> <C-k> :cprevious<CR>
-nnoremap <silent> <C-j> :cnext<CR>
+" Navigation through one of the lists
+let g:quickfix_or_location_navigation = 'quickfix'
+function ToggleQuickfixOrLocationList()
+    if g:quickfix_or_location_navigation ==# 'quickfix'
+        let g:quickfix_or_location_navigation = 'location'
+        echo "Using location list for <C-k> and <C-j> navigation"
+    else
+        let g:quickfix_or_location_navigation = 'quickfix'
+        echo "Using quickfix list for <C-k> and <C-j> navigation"
+    endif
+endfunction
+function NextQuickfixOrLocationList()
+    try
+        if g:quickfix_or_location_navigation ==# 'quickfix'
+            cnext
+        else
+            lnext
+        endif
+    catch /^Vim\%((\a\+)\)\=:E42:/
+        echo "Empty " . g:quickfix_or_location_navigation . " list"
+    catch /^Vim\%((\a\+)\)\=:E776:/
+        echo "No more items in " . g:quickfix_or_location_navigation . " list"
+    catch /^Vim\%((\a\+)\)\=:E553:/
+        echo "No more items in " . g:quickfix_or_location_navigation . " list"
+    endtry
+endfunction
+function PrevQuickfixOrLocationList()
+    try
+        if g:quickfix_or_location_navigation ==# 'quickfix'
+            cprevious
+        else
+            lprevious
+        endif
+    catch /^Vim\%((\a\+)\)\=:E42:/
+        echo "Empty " . g:quickfix_or_location_navigation . " list"
+    catch /^Vim\%((\a\+)\)\=:E776:/
+        echo "No more items in " . g:quickfix_or_location_navigation . " list"
+    catch /^Vim\%((\a\+)\)\=:E553:/
+        echo "No more items in " . g:quickfix_or_location_navigation . " list"
+    endtry
+endfunction
+nnoremap <silent> <Leader>n :call ToggleQuickfixOrLocationList()<cr>
+nnoremap <silent> <C-k> :call PrevQuickfixOrLocationList()<cr>
+nnoremap <silent> <C-j> :call NextQuickfixOrLocationList()<cr>
+
+" Easy way to fill the llist with Coc diagnostics
+nnoremap <silent> <C-h> :CocDiagnostics<cr><C-w>c:lfirst<cr>
 
 " Inserting markdown
 nnoremap <silent> <leader>` o<CR>```<CR>```<CR><Esc>kO<Esc>
@@ -966,8 +1007,14 @@ endfunction
 "     silent redraw!
 " endfunction
 
+let g:eslint_path = ""
+if executable("eslint")
+    let g:eslint_path = "eslint"
+elseif executable(trim(system("npm root")) . "/.bin/eslint")
+    let g:eslint_path = trim(system("npm root")) . "/.bin/eslint"
+endif
 function! EslintTypescript(fileName)
-    silent execute '!eslint --fix ' . a:fileName
+    silent execute '!' . g:eslint_path . ' --fix ' . a:fileName
     silent redraw!
 endfunction
 
@@ -1005,7 +1052,7 @@ augroup general_autos
     "     autocmd BufWritePost *.tsx,*.ts call PrettierTypescript(expand('<afile>'))
     " endif
 
-    if executable("eslint")
+    if g:eslint_path != ""
         autocmd BufWritePost *.tsx,*.ts call EslintTypescript(expand('<afile>'))
     endif
 augroup END
