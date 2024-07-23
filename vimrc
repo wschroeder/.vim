@@ -964,6 +964,8 @@ function! PrefixElixirPipe()
 endfunction
 noremap <silent> <C-\> :call PrefixElixirPipe()<cr>
 
+nnoremap <silent> <Leader>i o\|> IO.inspect(limit: :infinity)<Esc>
+
 "-----------------------------------------------------------------------------
 " Autocommands
 "-----------------------------------------------------------------------------
