@@ -41,6 +41,7 @@ endif
 Plug 'easymotion/vim-easymotion'
 Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'itchyny/vim-qfedit'
 Plug 'kana/vim-textobj-user'
 Plug 'liuchengxu/vim-which-key'
 Plug 'LnL7/vim-nix'
