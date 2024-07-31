@@ -232,7 +232,7 @@ xmap <silent> <leader>k <Plug>(vertical_move_up)
 " Took a lot of advice from https://pragmaticpineapple.com/ultimate-vim-typescript-setup/
 
 let g:airline#extensions#coc#enabled = 1
-let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer', 'coc-tsserver', 'coc-elixir']
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer', 'coc-tsserver', 'coc-elixir', 'coc-lua']
 inoremap <silent><expr> <C-@> coc#refresh()
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
