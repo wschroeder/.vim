@@ -64,7 +64,6 @@ Plug 'zigford/vim-powershell'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
-Plug 'slashmili/alchemist.vim', {'branch': 'main'}
 
 " Rust
 Plug 'rust-lang/rust.vim'
