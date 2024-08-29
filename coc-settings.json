@@ -3,5 +3,6 @@
     "python.linting.pylintPath": "pylint",
     "python.pythonPath": "python",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "elixirLS.dialyzerEnabled": false
+    "elixirLS.dialyzerEnabled": false,
+    "elixirLS.incrementalDialyzer": false
 }
