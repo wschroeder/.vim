@@ -231,6 +231,7 @@ xmap <silent> <leader>k <Plug>(vertical_move_up)
 " Took a lot of advice from https://pragmaticpineapple.com/ultimate-vim-typescript-setup/
 
 let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#coc#show_coc_status = 1
 let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-go', 'coc-rust-analyzer', 'coc-tsserver', 'coc-elixir', 'coc-lua']
 inoremap <silent><expr> <C-@> coc#refresh()
 
@@ -1004,6 +1005,10 @@ function! ConfigureTypescript()
   set tabstop=2
 endfunction
 
+function! ConfigureElixir()
+  nnoremap <buffer> <silent> K :call CocAction('doHover')<CR>
+endfunction
+
 " function! PrettierTypescript(fileName)
 "     silent execute '!npx prettier --write ' . a:fileName
 "     silent redraw!
@@ -1044,6 +1049,7 @@ augroup general_autos
 
     autocmd BufNewFile,BufRead,BufWinEnter *.go call ConfigureGo()
     autocmd BufNewFile,BufRead,BufWinEnter *.tsx,*.ts call ConfigureTypescript()
+    autocmd BufNewFile,BufRead,BufWinEnter *.esx,*.ex call ConfigureElixir()
 
     augroup highlight_current_word
       au!
