@@ -4,5 +4,6 @@
     "python.pythonPath": "python",
     "typescript.updateImportsOnFileMove.enabled": "always",
     "elixirLS.dialyzerEnabled": false,
-    "elixirLS.incrementalDialyzer": false
+    "elixirLS.incrementalDialyzer": false,
+    "elixirLS.mixEnv": "dev"
 }
