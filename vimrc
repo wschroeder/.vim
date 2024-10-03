@@ -167,11 +167,7 @@ colorscheme shadow
 " <10  => Max number of lines saved for each register (10)
 " s10  => Max size of a register in kB (10 kB)
 " n... => Name of the viminfo file
-if has('nvim')
-    set viminfo='32,f1,<10,s10,n$HOME/.vim-local/nviminfo
-else
-    set viminfo='32,f1,<10,s10,n$HOME/.vim-local/viminfo
-endif
+set viminfo='32,f1,<10,s10,n$HOME/.vim-local/viminfo
 
 " Status Line settings
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
