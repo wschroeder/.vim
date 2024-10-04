@@ -1057,6 +1057,13 @@ augroup general_autos
     endif
 augroup END
 
+
+"-----------------------------------------------------------------------------
+" Helpers
+" ----------------------------------------------------------------------------
+command! -nargs=1 UrlDecode echo system('python3 -c "import urllib.parse, sys; print(urllib.parse.unquote(sys.argv[1]))" ' . shellescape(<q-args>))
+
+
 "-----------------------------------------------------------------------------
 " Now that everything is in place, read local differences
 "-----------------------------------------------------------------------------
