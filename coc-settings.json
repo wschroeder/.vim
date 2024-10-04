@@ -5,5 +5,7 @@
     "typescript.updateImportsOnFileMove.enabled": "always",
     "elixirLS.dialyzerEnabled": false,
     "elixirLS.incrementalDialyzer": false,
-    "elixirLS.mixEnv": "dev"
+    "elixirLS.mixEnv": "dev",
+    "erlang_ls.erlang_ls_path": "erlang_ls",
+    "erlang_ls.trace.server": "off"
 }
