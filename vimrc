@@ -77,6 +77,9 @@ Plug 'jparise/vim-graphql'        " GraphQL syntax
 " AI
 Plug 'Exafunction/codeium.vim', {'branch': 'main'}
 
+" Games
+Plug 'katono/rogue.vim'
+
 call plug#end()
 
 let html_no_rendering=1         " [syntax/html.vim] Don't make html fancy, like underlining links
