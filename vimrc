@@ -48,7 +48,6 @@ Plug 'mbbill/undotree'
 Plug 'matschaffer/vim-islime2'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'plasticboy/vim-markdown'
-Plug 'SirVer/ultisnips'
 Plug 'terrastruct/d2-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -659,14 +658,6 @@ imap <C-l> <Cmd>call codeium#Clear()<CR>
 " imap <C-j> <Plug>(copilot-next)
 " imap <C-k> <Plug>(copilot-previous)
 " imap <C-l> <Plug>(copilot-dismiss)
-
-
-"-----------------------------------------------------------------------------
-" UltiSnips
-"-----------------------------------------------------------------------------
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 
 "-----------------------------------------------------------------------------
