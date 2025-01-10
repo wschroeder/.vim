@@ -644,10 +644,6 @@ augroup END
 "-----------------------------------------------------------------------------
 
 let g:codeium_enabled = v:true
-let g:codeium_filetypes = {
-    \ "markdown": v:false,
-    \ "elixir": v:true,
-    \ }
 
 call airline#parts#define_function('codeium_enabled', 'codeium#GetStatusString')
 let g:airline_section_y = airline#section#create_right(['codeium_enabled'])
