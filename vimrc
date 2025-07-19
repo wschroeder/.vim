@@ -648,7 +648,7 @@ call airline#parts#define_function('codeium_enabled', 'codeium#GetStatusString')
 let g:airline_section_y = airline#section#create_right(['codeium_enabled'])
 
 let g:codeium_disable_bindings = 1
-imap <script><silent><nowait><expr> <C-u> codeium#Accept()
+imap <script><silent><nowait><expr> <Tab> codeium#Accept()
 imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
 imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
 imap <C-l> <Cmd>call codeium#Clear()<CR>
