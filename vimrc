@@ -61,6 +61,9 @@ Plug 'vim-scripts/utl.vim'
 Plug 'vim-utils/vim-vertical-move'
 Plug 'zigford/vim-powershell'
 
+" AI
+Plug 'ggml-org/llama.vim'
+
 " Elixir
 Plug 'elixir-editors/vim-elixir'
 
@@ -72,9 +75,6 @@ Plug 'pangloss/vim-javascript'    " JavaScript support
 Plug 'leafgarland/typescript-vim' " TypeScript syntax
 Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
 Plug 'jparise/vim-graphql'        " GraphQL syntax
-
-" AI
-Plug 'Exafunction/codeium.vim', {'branch': 'main'}
 
 " Games
 Plug 'katono/rogue.vim'
@@ -136,6 +136,7 @@ set listchars=tab:__,trail:.     " Tabs look like ____, and trailing spaces look
 set matchpairs=(:),{:},[:]       " Show highlight match for these symbols
 set nobackup                     " Don't make backups of files
 set nohlsearch                   " Highlights search matches
+set nomodeline                   " No vulnerabilities, thank you
 set nostartofline                " When switching buffers, do not move the cursor to the start of the line
 set nowrap                       " Turn off visual line wrap
 set nowritebackup                " Turn off making a backup before overwriting a file
@@ -198,6 +199,18 @@ augroup autoread_autos
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
+
+"-----------------------------------------------------------------------------
+" AI
+"-----------------------------------------------------------------------------
+let g:llama_config = {
+      \ 'endpoint_fim': 'http://127.0.0.1:8012/completion',
+      \ 'keymap_fim_trigger': '<C-L>',
+      \ 'keymap_fim_accept_full': '<Tab>',
+      \ 'keymap_fim_accept_line': '<S-Tab>',
+      \ 'keymap_fim_accept_word': '<C-Right>',
+      \ 'auto_fim': v:true,
+      \ }
 
 
 "-----------------------------------------------------------------------------
@@ -636,28 +649,6 @@ augroup yaml_autos
     autocmd!
     autocmd FileType yaml call ConfigureYAML()
 augroup END
-
-
-"-----------------------------------------------------------------------------
-" Codeium
-"-----------------------------------------------------------------------------
-
-let g:codeium_enabled = v:true
-
-call airline#parts#define_function('codeium_enabled', 'codeium#GetStatusString')
-let g:airline_section_y = airline#section#create_right(['codeium_enabled'])
-
-let g:codeium_disable_bindings = 1
-imap <script><silent><nowait><expr> <Tab> codeium#Accept()
-imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
-imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
-imap <C-l> <Cmd>call codeium#Clear()<CR>
-
-" let g:copilot_no_default_key_mappings = v:true
-" imap <C-u> <Plug>(copilot-accept)
-" imap <C-j> <Plug>(copilot-next)
-" imap <C-k> <Plug>(copilot-previous)
-" imap <C-l> <Plug>(copilot-dismiss)
 
 
 "-----------------------------------------------------------------------------
